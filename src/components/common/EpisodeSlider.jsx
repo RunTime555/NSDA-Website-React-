@@ -80,14 +80,7 @@ const EpisodeSlider = ({ episodes, onCardClick }) => {
 
                   {/* AUTHOR INFO */}
                   <div className="flex items-center gap-2 mt-4">
-                    <img
-                      src={
-                        ep.authorPhoto ||
-                        `https://ui-avatars.com/api/?name=${encodeURIComponent(ep.author)}&background=C5A059&color=fff`
-                      }
-                      alt={ep.author}
-                      className="w-7 h-7 rounded-full border border-primary/10 object-cover"
-                    />
+                  
                     <span className="text-xs text-primary/60 font-medium">
                       {ep.author}
                     </span>

@@ -1,97 +1,96 @@
 export const episodes = [
   {
     id: 1,
-    title: "Scalability in the Era of Cloud Native",
-    category: "Architecture",
-    author: "Omar Al-Farsi",
-    authorPhoto: "https://ui-avatars.com/api/?name=Omar+Al-Farsi&background=0a192f&color=fff",
-    duration: "42:15",
-    date: "2024-09-12", // ISO format for reliable sorting
-    videoUrl: "https://youtu.be/d742QEZIMkw",
-    description: "Exploring high-availability patterns for global-scale applications.",
+    title: "Nujum-Code EP01 (Initial Season) - With Semer Nur",
+    category: "Development",
+    author: "Semer Nur",
+    duration: "1:54:21",
+    date: "2025-06-06",
+    videoUrl: "https://www.youtube.com/watch?v=d742QEZIMkw",
+    description: "Software Dev | Blockchain | Fintech"
   },
   {
     id: 2,
-    title: "Privacy by Design: The Sacred Trust",
-    category: "Security",
-    author: "Sarah Malik",
-    authorPhoto: "https://ui-avatars.com/api/?name=Sarah+Malik&background=0a192f&color=fff",
-    duration: "38:40",
-    date: "2024-08-28",
-    videoUrl: "https://youtu.be/vlg-XAYSwvM",
-    description: "How we approach data stewardship through a lens of ethical responsibility.",
+    title: "Nujum-Code EP02 (Initial Season) - With Mohammed Ibrahim",
+    category: "Engineering",
+    author: "Mohammed Ibrahim",
+    duration: "1:47:49",
+    date: "2025-10-06",
+    videoUrl: "https://www.youtube.com/watch?v=vlg-XAYSwvM",
+    description: "Full Stack Developer"
   },
   {
     id: 3,
-    title: "LLMs and the Future of Logic",
-    category: "Innovation",
-    author: "Prof. Kareem Zeid",
-    authorPhoto: "https://ui-avatars.com/api/?name=Kareem+Zeid&background=0a192f&color=fff",
-    duration: "55:20",
-    date: "2024-08-05",
-    videoUrl: "https://youtu.be/wu2oWKUMjhc",
-    description: "Deconstructing the transformer architecture and its impact on reasoning.",
+    title: "Nujum-Code EP03 (Initial Season) - With Ali Weber",
+    category: "Full Stack",
+    author: "Ali Weber",
+    duration: "1:45:51",
+    date: "2025-10-06",
+    videoUrl: "https://www.youtube.com/watch?v=wu2oWKUMjhc",
+    description: "UI/UX developer | Full Stack Developer | Co-founder @ Evergreen Technology"
   },
   {
     id: 4,
-    title: "Frontend Architecture Patterns",
+    title: "Nujum-Code EP04 (Season One) - With Anwar Nasir",
     category: "Development",
-    author: "Semira Bahru",
-    authorPhoto: "https://ui-avatars.com/api/?name=Semira+Bahru&background=0a192f&color=fff",
-    duration: "48:12",
-    date: "2024-10-01",
-    videoUrl: "https://youtu.be/dFnta9toyvc",
-    description: "Deep dive into React patterns and state management.",
+    author: "Anwar Nasir",
+    duration: "57:19",
+    date: "2025-11-06",
+    videoUrl: "https://www.youtube.com/watch?v=dFnta9toyvc",
+    description: "Flutter Dev @ athena Labs | Mobile Dev @ Nova Tech"
   },
   {
     id: 5,
-    title: "The Art of Clean Code",
-    category: "Engineering",
-    author: "Semira Bahru",
-    authorPhoto: "https://ui-avatars.com/api/?name=Semira+Bahru&background=0a192f&color=fff",
-    duration: "32:05",
-    date: "2024-10-10",
-    videoUrl: "https://youtu.be/ltllWogkB6E",
-    description: "Writing maintainable and readable software for the long term.",
+    title: "NUJUM-AL-CODE EP05 (Season One) - With Khalid Ebrahim",
+    category: "Innovation",
+    author: "Khalid Ebrahim",
+    duration: "1:33:57",
+    date: "2025-11-06",
+    videoUrl: "https://www.youtube.com/watch?v=ltllWogkB6E",
+    description: "Full Stack Developer | AI Driven Innovator"
   },
   {
     id: 6,
-    title: "AI and Ethical Engineering",
-    category: "Innovation",
-    author: "Semira Bahru",
-    authorPhoto: "https://ui-avatars.com/api/?name=Semira+Bahru&background=0a192f&color=fff",
-    duration: "44:30",
-    date: "2024-10-22",
-    videoUrl: "https://youtu.be/nHjT8h-vJgA",
-    description: "Balancing rapid innovation with moral responsibility.",
+    title: "Nujum-Code Ep06 (Season Two) With Seid S.",
+    category: "Architecture",
+    author: "Seid Shemsu",
+    duration: "1:20:40",
+    date: "2026-02-06",
+    videoUrl: "https://www.youtube.com/watch?v=nHjT8h-vJgA",
+    description: "Android Engineer - 'kotlin java'"
   },
   {
     id: 7,
-    title: "Cybersecurity Essentials",
-    category: "Security",
-    author: "Semira Bahru",
-    authorPhoto: "https://ui-avatars.com/api/?name=Semira+Bahru&background=0a192f&color=fff",
-    duration: "51:10",
-    date: "2024-11-05",
-    videoUrl: "https://youtu.be/JUqQigftd4U",
-    description: "Protecting digital assets in an increasingly connected world.",
+    title: "Nujum-Code Ep07 (Season Two) - With Abdulaziz Shewabu",
+    category: "Development",
+    author: "Abdulaziz Shewabu",
+    duration: "1:16:26",
+    date: "2026-02-06",
+    videoUrl: "https://www.youtube.com/watch?v=JUqQigftd4U",
+    description: "Full Stack Web Developer - 'The main part of software development is learning once you stop learning you will stop being a programmer'"
   },
   {
     id: 8,
-    title: "Mastering the MERN Stack",
-    category: "Full Stack",
-    author: "Semira Bahru",
-    authorPhoto: "https://ui-avatars.com/api/?name=Semira+Bahru&background=0a192f&color=fff",
-    duration: "1:12:00",
-    date: "2024-11-15",
-    videoUrl: "https://youtu.be/-0MC8oAlHZ0",
-    description: "Comprehensive guide to building modern web applications.",
-  },
+    title: "Nujum-Code Ep08 (Season Two) - With Khalid Mohammed",
+    category: "Security",
+    author: "Khalid Mohammed",
+    duration: "55:25",
+    date: "2026-02-06",
+    videoUrl: "https://www.youtube.com/watch?v=-0MC8oAlHZ0",
+    description: "Software and Agent engineer - 'Until death, all defeat is psychological'"
+  }
 ];
 
-
 export const getLatestEpisode = (episodes) => {
-  return [...episodes].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  )[0];
+  return episodes.reduce((latest, current) => {
+    const latestDate = new Date(latest.date);
+    const currentDate = new Date(current.date);
+
+    if (currentDate > latestDate) return current;
+    if (currentDate.getTime() === latestDate.getTime() && current.id > latest.id) {
+      return current;
+    }
+
+    return latest;
+  });
 };

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import SectionWrapper from "../components/common/SectionWrapper";
 import { episodes } from "../data/nujum";
+import { getLatestEpisode } from "../data/nujum";
 import EpisodeSlider from "../components/common/EpisodeSlider";
 import { Play } from "lucide-react";
 
@@ -11,8 +12,7 @@ const Nujum = () => {
   const [selected, setSelected] = useState(null);
   const [showAll, setShowAll] = useState(false);
 
-  const latestEpisode = episodes?.[0] || null;
-
+const latestEpisode = getLatestEpisode(episodes);
   // YouTube Video ID extractor
   const getVideoId = (url) => {
     if (!url) return null;
@@ -83,10 +83,17 @@ const featuredVideoId = getVideoId(latestEpisode?.videoUrl);
   >
     {featuredVideoId ? (
       <img
-        src={`https://img.youtube.com/vi/${featuredVideoId}/maxresdefault.jpg`}
-        className="w-full aspect-video object-cover transition-transform duration-700 group-hover:scale-110"
-        alt={latestEpisode?.title || "Latest Episode"}
-      />
+  src={`https://img.youtube.com/vi/${featuredVideoId}/maxresdefault.jpg`}
+  onError={(e) => {
+    if (e.target.src.includes("maxresdefault")) {
+      e.target.src = `https://img.youtube.com/vi/${featuredVideoId}/hqdefault.jpg`;
+    } else if (e.target.src.includes("hqdefault")) {
+      e.target.src = `https://img.youtube.com/vi/${featuredVideoId}/mqdefault.jpg`;
+    }
+  }}
+  className="w-full aspect-video object-cover transition-transform duration-700 group-hover:scale-110"
+  alt={latestEpisode?.title || "Latest Episode"}
+/>
     ) : (
       <div className="w-full aspect-video bg-gray-200 flex items-center justify-center">
         <span className="text-gray-500">Thumbnail unavailable</span>
@@ -119,7 +126,7 @@ const featuredVideoId = getVideoId(latestEpisode?.videoUrl);
       Now Playing
     </span>
 
-    {/* Removed "EPISODE" text - now only shows the number */}
+
     <span className="text-[10px] font-bold tracking-[0.2em] text-white/90 uppercase">
       {latestEpisode?.id}
     </span>
@@ -132,7 +139,7 @@ const featuredVideoId = getVideoId(latestEpisode?.videoUrl);
   </h3>
 
   <div className="flex items-center gap-2 text-[11px] font-medium text-white/70 uppercase tracking-widest">
-    {/* Removed "Featuring" label - now only shows the author and duration */}
+    
     <span>{latestEpisode?.author}</span>
     <span className="opacity-40">•</span>
     <span>{latestEpisode?.duration}</span>
@@ -178,12 +185,16 @@ const featuredVideoId = getVideoId(latestEpisode?.videoUrl);
                     {/* Image */}
                     <div className="aspect-video overflow-hidden rounded-2xl mb-6 relative">
                       {videoId ? (
-                        <img
-                          src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-                          className={`w-full h-full object-cover transition-all duration-500
-  ${isActive ? "brightness-110 contrast-105" : "opacity-80 group-hover:opacity-100"}`}
-                          alt={ep.title}
-                        />
+                      <img
+  src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+  onError={(e) => {
+    e.currentTarget.onerror = null;
+    e.currentTarget.src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+  }}
+  className={`w-full h-full object-cover transition-all duration-500
+    ${isActive ? "brightness-110 contrast-105" : "opacity-80 group-hover:opacity-100"}`}
+  alt={ep.title}
+/>
                       ) : (
                         <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                           <span className="text-gray-400 text-sm">No thumbnail</span>
@@ -216,12 +227,7 @@ const featuredVideoId = getVideoId(latestEpisode?.videoUrl);
 
                       {/* Author */}
                       <div className="mt-4 flex items-center gap-2">
-                        <img
-                          src={ep.authorPhoto}
-                          className={`w-6 h-6 rounded-full transition-all duration-500
-                            ${isActive ? "grayscale-0" : "grayscale group-hover:grayscale-0"}`}
-                          alt={ep.author}
-                        />
+                       
                         <span className="text-[10px] text-gray-500 font-medium">
                           {ep.author}
                         </span>
@@ -269,30 +275,30 @@ const featuredVideoId = getVideoId(latestEpisode?.videoUrl);
         </p>
       </div>
 
-      {/* RIGHT TELEGRAM BOX */}
-      <div className="w-full lg:max-w-md">
+      
 
-       <div className="flex items-center justify-between bg-surface/10 p-2 rounded-xl border border-surface/20 backdrop-blur-sm">
-          
-          <input
-            type="text"
-            placeholder="NSDA community"
-            className="bg-transparent flex-1 px-4 py-3 outline-none text-xs placeholder:text-surface/50 text-surface"
-          />
+         {/* RIGHT TELEGRAM BOX */}
+<div className="w-full lg:max-w-md">
 
-          {/* Telegram button */}
-         {/* Updated Join Us button */}
-          <a
-            href="https://t.me/nsda_community"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-secondary text-primary px-8 py-3 rounded-lg font-headline font-bold text-sm hover:opacity-90 transition-all active:scale-95 flex items-center gap-2 shadow-lg"
-          >
-            <span className="material-symbols-outlined text-sm">
-              send
-            </span>
-            Join Us
-          </a>
+
+  <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between bg-surface/10 p-2 rounded-xl border border-surface/20 backdrop-blur-sm gap-3 sm:gap-2">
+
+    <span className="flex-1 px-4 py-3 text-sm text-surface/60 font-body select-none text-left">
+      NSDA community
+    </span>
+
+    {/* Telegram button */}
+    <a
+      href="https://t.me/nsda_community"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-secondary text-primary px-8 py-3 rounded-lg font-headline font-bold text-sm hover:opacity-90 transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg whitespace-nowrap"
+    >
+      <span className="material-symbols-outlined text-sm">
+        send
+      </span>
+      Join Us
+    </a>
         </div>
 
         <p className="text-[8px] text-surface/50 mt-3 uppercase tracking-[0.2em] text-center lg:text-left">

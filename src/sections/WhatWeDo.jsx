@@ -190,7 +190,7 @@ export default function WhatWeDo() {
               {[
                 { value: "11+",  color: "text-white",     label: "Industry Mentors",     sub: "Guiding the next generation" },
                 { value: "80+",  color: "text-[#DDA23A]", label: "Active Students",      sub: "From universities nationwide" },
-                { value: "5+", color: "text-white",     label: "Open Source Projects", sub: "Serving the Ummah globally" },
+                { value: "15+", color: "text-white",     label: "Universitys", sub: "Serving the Ummah nationwide" },
               ].map(({ value, color, label, sub }) => (
                 <div
                   key={label}

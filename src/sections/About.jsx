@@ -89,7 +89,7 @@ export default function About() {
         />
 
         
-        <div className="absolute inset-0 z-0 bg-white/25" />
+        <div className="absolute inset-0 z-0 bg-white/5" />
 
         {/* decorative ring */}
         <div className="absolute -right-32 -top-32 w-[500px] h-[500px] rounded-full border-2 border-[#013463]/40 z-0 hidden lg:block" />

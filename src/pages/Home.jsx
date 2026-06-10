@@ -15,7 +15,7 @@ function useFadeIn(delay = 0) {
         el.classList.remove('opacity-0', 'translate-y-10');
         obs.disconnect();
       }
-    }, { threshold: 0.1 });
+    }, { threshold: 0.05, rootMargin: '0px 0px -60px 0px' });
     obs.observe(el);
     return () => obs.disconnect();
   }, [delay]);
@@ -73,21 +73,16 @@ const IconZap = () => (
     <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
   </svg>
 );
-const IconCheck = () => (
-  <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
-  </svg>
-);
 
 /* ════════════════════════════════════════════════
-   HERO — star bg, same as About / WhatWeDo / Projects
+   HERO — star bg, consistent with all other pages
 ════════════════════════════════════════════════ */
 function Hero() {
   const ref = useFadeIn(0);
   return (
     <header className="relative min-h-screen flex items-center overflow-hidden">
 
-      {/* ── star bg: position fixed to header, covers fully on all screens ── */}
+      {/* star background — covers 100% on all screens */}
       <img
         src={star}
         alt=""
@@ -95,39 +90,46 @@ function Hero() {
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', zIndex: 0 }}
       />
       {/* light overlay */}
-      <div className="absolute inset-0 bg-white/25" style={{ zIndex: 1 }} />
+      <div className="absolute inset-0 bg-white/5" style={{ zIndex: 1 }} />
 
       {/* decorative rings — desktop only */}
       <div className="absolute -right-32 -top-32 w-[500px] h-[500px] rounded-full border-2 border-[#013463]/40 hidden lg:block" style={{ zIndex: 2 }} />
       <div className="absolute -right-16 -top-16 w-[320px] h-[320px] rounded-full border-2 border-[#DDA23A]/40 hidden lg:block" style={{ zIndex: 2 }} />
 
-      {/* ── content ── */}
+      {/* content */}
       <div
         ref={ref}
-        className="opacity-0 translate-y-10 transition-all duration-700 ease-out w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32"
-        style={{ position: 'relative', zIndex: 10, paddingTop: '7rem', paddingBottom: '7rem' }}
+        className="opacity-0 translate-y-10 transition-all duration-700 ease-out w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 py-16 md:py-0"
+        style={{ position: 'relative', zIndex: 10 }}
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center min-h-screen lg:min-h-0 lg:py-28">
 
-          {/* ── Left: text — always full width on mobile, centered ── */}
-          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+          {/* ── Left: text ── */}
+          <div className="lg:col-span-7 space-y-7">
 
-            <span className="inline-flex items-center justify-center lg:justify-start gap-2 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-[#DDA23A]">
-              <span className="w-6 h-px bg-[#DDA23A]" />
+            {/* eyebrow — same as other pages */}
+            <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-[#DDA23A]">
+              <span className="inline-block w-6 h-px bg-[#DDA23A]" />
               Est. March 31, 2025
             </span>
 
+            {/* Title — left-aligned always, 2-line on mobile */}
             <h1 className="font-extrabold text-[#013463] text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight">
-              Nejm Student <br />
-              <span className="text-[#DDA23A]">Developers</span> <br />
-              Association
+              Nejm Student{' '}
+              <span className="text-[#DDA23A]">Developers</span>
+              <br />
+              <span className="relative inline-block">
+                Association
+                <span className="absolute -bottom-1 left-0 w-full h-[3px] bg-[#DDA23A]/40 rounded-full" />
+              </span>
             </h1>
 
-            <p className="text-gray-600 text-base sm:text-lg leading-relaxed max-w-lg mx-auto lg:mx-0">
+            <p className="text-gray-600 text-base sm:text-lg leading-relaxed max-w-lg">
               A nationwide community of Muslim students and developers advancing in tech while staying true to Islamic values.
             </p>
 
-            <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+            {/* trust badges */}
+            <div className="flex flex-wrap gap-3">
               {["Faith-Driven", "Open-Source", "Student-Led"].map((badge) => (
                 <span key={badge} className="inline-flex items-center gap-1.5 bg-white/70 border border-gray-200 px-3 py-1.5 rounded-full text-xs font-semibold text-[#013463]">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#DDA23A]" />
@@ -136,21 +138,11 @@ function Hero() {
               ))}
             </div>
 
-            {/* stats */}
-            <div className="flex flex-wrap gap-8 justify-center lg:justify-start">
-              {[
-                { value: "2025",  label: "Founded"      },
-                { value: "80+",   label: "Members"      },
-                { value: "Multi", label: "Universities" },
-              ].map(({ value, label }) => (
-                <div key={label} className="flex flex-col items-center lg:items-start">
-                  <span className="text-[#DDA23A] font-extrabold text-2xl sm:text-3xl leading-none">{value}</span>
-                  <span className="text-[#013463] text-xs uppercase tracking-widest mt-1 font-semibold">{label}</span>
-                </div>
-              ))}
-            </div>
+            {/* stats — like About / Projects / Leadership hero */}
+          
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            {/* CTA buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
               <a
                 href="https://t.me/nsda_community"
                 target="_blank"
@@ -169,16 +161,12 @@ function Hero() {
             </div>
           </div>
 
-          {/* ── Right: image — hidden on mobile, visible md+ ── */}
+          {/* ── Right: image — hidden on mobile ── */}
           <div className="lg:col-span-5 relative hidden md:block">
             <div className="relative">
               <div className="absolute inset-0 rounded-3xl translate-x-3 translate-y-3 bg-[#DDA23A]/20" />
               <div className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl">
-                <img
-                  alt="Coding workspace"
-                  className="w-full h-full object-cover"
-                  src="/hero-image.jpg"
-                />
+                <img alt="Coding workspace" className="w-full h-full object-cover" src="/hero-image.jpg" />
               </div>
               <div className="absolute -bottom-4 -left-4 p-4 rounded-2xl shadow-xl bg-[#DDA23A]">
                 <span className="text-2xl font-extrabold block leading-none text-[#013463]">2025</span>
@@ -207,11 +195,8 @@ function Hero() {
 function About() {
   const ref = useFadeIn(0);
   return (
-    <section className="py-20 sm:py-28 bg-[#f6f9fd] relative overflow-hidden" id="about">
-      <div
-        ref={ref}
-        className="opacity-0 translate-y-10 transition-all duration-700 ease-out max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32"
-      >
+    <section className="py-20 sm:py-28 bg-[#F6F9FD] relative overflow-hidden" id="about">
+      <div ref={ref} className="opacity-0 translate-y-10 transition-all duration-700 ease-out max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="space-y-6">
             <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A]">
@@ -219,8 +204,7 @@ function About() {
               Our Genesis
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight text-[#013463]">
-              Bridging Sacred Wisdom and{' '}
-              <span className="text-[#DDA23A]">Silicon Innovation</span>
+              Bridging Sacred Wisdom and <span className="text-[#DDA23A]">Silicon Innovation</span>
             </h2>
             <div className="space-y-4 text-gray-500 text-base leading-relaxed">
               <p>Founded on <span className="font-semibold text-[#013463]">March 31, 2025</span>, NSDA emerged from a vision to nurture a generation of developers who build for the dunya while securing their akhira.</p>
@@ -228,8 +212,8 @@ function About() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               {[
-                { title: "Our Vision",   body: "To be the global hub for ethical software development excellence." },
-                { title: "Our Mission",  body: "Empowering students through technical mastery and spiritual grounding." },
+                { title: "Our Vision",  body: "To be the global hub for ethical software development excellence." },
+                { title: "Our Mission", body: "Empowering students through technical mastery and spiritual grounding." },
               ].map(({ title, body }) => (
                 <div key={title} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm relative overflow-hidden">
                   <span className="absolute top-0 left-6 h-[3px] w-8 bg-[#DDA23A] rounded-b-full" />
@@ -239,14 +223,10 @@ function About() {
               ))}
             </div>
           </div>
-
           <div className="relative hidden sm:block">
             <div className="absolute inset-0 rounded-3xl translate-x-4 translate-y-4 bg-[#DDA23A]/15" />
-            <img
-              alt="Team collaboration"
-              className="rounded-2xl shadow-xl relative z-10 w-full object-cover aspect-[4/3]"
-              src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800"
-            />
+            <img alt="Team collaboration" className="rounded-2xl shadow-xl relative z-10 w-full object-cover aspect-[4/3]"
+              src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800" />
           </div>
         </div>
       </div>
@@ -260,43 +240,28 @@ function About() {
 function WhatWeDo() {
   const ref = useFadeIn(0);
   const pillars = [
-    { icon: <IconHeart />,  title: "Sadaqah Jariyah",  description: "Building open-source tools that serve the Ummah and earn continuous reward.", dark: false },
-    { icon: <IconStar />,   title: "Nujum al-Code",    description: "Engaging technical deep-dives and webinars with industry veterans.",          dark: true  },
-    { icon: <IconUsers />,  title: "Mentorship",       description: "One-on-one guidance connecting seasoned devs with aspiring students.",         dark: false },
-    { icon: <IconCode />,   title: "NSDA Hackathon",   description: "An internal 48-hour hackathon exclusively for NSDA students.",                dark: true  },
+    { icon: <IconHeart />, title: "Sadaqah Jariyah", description: "Building open-source tools that serve the Ummah and earn continuous reward.", dark: false },
+    { icon: <IconStar />,  title: "Nujum al-Code",   description: "Engaging technical deep-dives and webinars with industry veterans.",          dark: true  },
+    { icon: <IconUsers />, title: "Mentorship",      description: "One-on-one guidance connecting seasoned devs with aspiring students.",         dark: false },
+    { icon: <IconCode />,  title: "NSDA Hackathon",  description: "An internal 48-hour hackathon exclusively for NSDA students.",                dark: true  },
   ];
-
   return (
     <section className="py-20 sm:py-28 bg-white relative" id="what-we-do">
-      <div
-        ref={ref}
-        className="opacity-0 translate-y-10 transition-all duration-700 ease-out max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32"
-      >
+      <div ref={ref} className="opacity-0 translate-y-10 transition-all duration-700 ease-out max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
         <div className="text-center mb-14">
           <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-4">
-            <span className="w-6 h-px bg-[#DDA23A]" />
-            What We Do
-            <span className="w-6 h-px bg-[#DDA23A]" />
+            <span className="w-6 h-px bg-[#DDA23A]" />What We Do<span className="w-6 h-px bg-[#DDA23A]" />
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#013463] mb-4">Our Pillars of Excellence</h2>
           <div className="w-16 h-1 bg-[#DDA23A] rounded-full mx-auto" />
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {pillars.map((p, i) => (
-            <div
-              key={i}
-              className={`group relative rounded-3xl p-8 overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition-all duration-300
-                ${p.dark ? 'bg-[#013463] text-white shadow-xl' : 'bg-white border border-gray-100 shadow-sm'}`}
-            >
+            <div key={i} className={`group relative rounded-3xl p-8 overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition-all duration-300
+              ${p.dark ? 'bg-[#013463] text-white shadow-xl' : 'bg-white border border-gray-100 shadow-sm'}`}>
               <span className="absolute top-0 left-8 h-[3px] w-10 bg-[#DDA23A] rounded-b-full" />
-              {p.dark && (
-                <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-white/5 group-hover:scale-125 transition-transform duration-500" />
-              )}
-              <div className={`relative z-10 w-12 h-12 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300
-                ${p.dark ? 'bg-[#DDA23A] text-[#013463]' : 'bg-[#DDA23A] text-[#013463]'}`}>
-                {p.icon}
-              </div>
+              {p.dark && <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-white/5 group-hover:scale-125 transition-transform duration-500" />}
+              <div className="relative z-10 w-12 h-12 rounded-2xl bg-[#DDA23A] text-[#013463] flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">{p.icon}</div>
               <h3 className={`relative z-10 text-lg font-extrabold mb-3 ${p.dark ? 'text-white' : 'text-[#013463]'}`}>{p.title}</h3>
               <p className={`relative z-10 leading-relaxed text-sm ${p.dark ? 'text-white/70' : 'text-gray-500'}`}>{p.description}</p>
             </div>
@@ -313,37 +278,27 @@ function WhatWeDo() {
 function Mentorship() {
   const ref = useFadeIn(0);
   const stats = [
-    { value: "11+",  label: "Expert Mentors"     },
-    { value: "80+",  label: "Active Students"    },
-    { value: "15+",  label: "Universities"       },
-    { value: "24/7", label: "Community Support"  },
+    { value: "11+",  label: "Expert Mentors"    },
+    { value: "80+",  label: "Active Students"   },
+    { value: "15+",  label: "Universities"      },
+    { value: "24/7", label: "Community Support" },
   ];
-
   return (
     <section className="py-20 sm:py-28 bg-[#013463] relative overflow-hidden" id="mentorship">
       <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full opacity-10 bg-[#DDA23A] blur-3xl pointer-events-none" />
       <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full opacity-5 bg-white blur-3xl pointer-events-none" />
-
-      <div
-        ref={ref}
-        className="opacity-0 translate-y-10 transition-all duration-700 ease-out max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 relative z-10"
-      >
+      <div ref={ref} className="opacity-0 translate-y-10 transition-all duration-700 ease-out max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="space-y-8">
             <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A]">
-              <span className="w-6 h-px bg-[#DDA23A]" />
-              Mentorship Program
+              <span className="w-6 h-px bg-[#DDA23A]" />Mentorship Program
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight">
-              Scaling Impact Through Guidance
-            </h2>
-            <p className="text-white/65 text-base sm:text-lg leading-relaxed">
-              Our mentorship program isn't just about code review — it's about holistic growth. We measure success by the strength of our community.
-            </p>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight">Scaling Impact Through Guidance</h2>
+            <p className="text-white/65 text-base sm:text-lg leading-relaxed">Our mentorship program isn't just about code review — it's about holistic growth. We measure success by the strength of our community.</p>
             <div className="space-y-5">
               {[
-                { label: "Mentor-Student Ratio",  value: "1:7",  pct: "85%" },
-                { label: "Project Success Rate",  value: "85%",  pct: "85%" },
+                { label: "Mentor-Student Ratio", value: "1:7",  pct: "85%" },
+                { label: "Project Success Rate", value: "85%",  pct: "85%" },
               ].map(({ label, value, pct }) => (
                 <div key={label}>
                   <div className="flex justify-between mb-2">
@@ -357,12 +312,11 @@ function Mentorship() {
               ))}
             </div>
           </div>
-
           <div className="grid grid-cols-2 gap-4 sm:gap-5">
-            {stats.map((stat, i) => (
+            {stats.map((s, i) => (
               <div key={i} className="group bg-white/5 border border-white/10 p-6 sm:p-8 rounded-3xl text-center hover:bg-white/10 hover:border-[#DDA23A]/40 transition-all duration-300">
-                <div className="text-4xl sm:text-5xl font-extrabold mb-2 text-[#DDA23A]">{stat.value}</div>
-                <div className="text-white/60 text-[10px] sm:text-xs uppercase tracking-widest font-bold">{stat.label}</div>
+                <div className="text-4xl sm:text-5xl font-extrabold mb-2 text-[#DDA23A]">{s.value}</div>
+                <div className="text-white/60 text-[10px] sm:text-xs uppercase tracking-widest font-bold">{s.label}</div>
               </div>
             ))}
           </div>
@@ -378,46 +332,29 @@ function Mentorship() {
 function Projects() {
   const ref = useFadeIn(0);
   const projects = [
-    { tech: "Python / Telegram", title: "Nejm Ask Bot",            description: "A Telegram bot that bridges students and NSDA leadership — keeping all communication organised, fast, and within the community channel.", icon: <IconBot />,  dark: true  },
-    { tech: "React / Firebase",  title: "Quran Study App",         description: "A cross-platform app for structured Quran study and tafsir tracking with real-time sync across all devices.",                             icon: <IconBook />, dark: false },
-    { tech: "Python / Auto",     title: "Daily Quran Automation",  description: "Automatically posts a short Quran video every morning to the Telegram channel — delivering Quranic verses to keep the community spiritually connected.", icon: <IconZap />,  dark: false },
+    { tech: "Python / Telegram", title: "Nejm Ask Bot",           description: "A Telegram bot that bridges students and NSDA leadership — keeping all communication organised, fast, and within the community channel.", icon: <IconBot />,  dark: true  },
+    { tech: "React / Firebase",  title: "Quran Study App",        description: "A cross-platform app for structured Quran study and tafsir tracking with real-time sync across all devices.",                             icon: <IconBook />, dark: false },
+    { tech: "Python / Auto",     title: "Daily Quran Automation", description: "Automatically posts a short Quran video every morning to the Telegram channel — delivering Quranic verses to keep the community spiritually connected.", icon: <IconZap />,  dark: false },
   ];
-
   return (
     <section className="py-20 sm:py-28 bg-[#f6f9fd] relative" id="projects">
-      <div
-        ref={ref}
-        className="opacity-0 translate-y-10 transition-all duration-700 ease-out max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32"
-      >
+      <div ref={ref} className="opacity-0 translate-y-10 transition-all duration-700 ease-out max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
         <div className="text-center mb-14">
           <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-4">
-            <span className="w-6 h-px bg-[#DDA23A]" />
-            Open Source
-            <span className="w-6 h-px bg-[#DDA23A]" />
+            <span className="w-6 h-px bg-[#DDA23A]" />Open Source<span className="w-6 h-px bg-[#DDA23A]" />
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-[#013463]">Open Source Ecosystem</h2>
-          <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
-            We build tools that solve problems within the community while following modern engineering best practices.
-          </p>
+          <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">We build tools that solve problems within the community while following modern engineering best practices.</p>
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((p, i) => (
-            <div
-              key={i}
-              className={`group rounded-3xl overflow-hidden border shadow-sm hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 p-7 sm:p-8 relative
-                ${p.dark ? 'bg-[#013463] border-[#013463]' : 'bg-white border-gray-100'}`}
-            >
+            <div key={i} className={`group rounded-3xl overflow-hidden border shadow-sm hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 p-7 sm:p-8 relative
+              ${p.dark ? 'bg-[#013463] border-[#013463]' : 'bg-white border-gray-100'}`}>
               <span className="absolute top-0 left-8 h-[3px] w-10 bg-[#DDA23A] rounded-b-full" />
               {p.dark && <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-white/5 group-hover:scale-125 transition-transform duration-500" />}
               <div className="relative z-10 flex justify-between items-start mb-5">
-                <span className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full
-                  ${p.dark ? 'bg-white/10 text-white/80' : 'bg-[#013463]/8 text-[#013463]'}`}>
-                  {p.tech}
-                </span>
-                <div className="w-10 h-10 rounded-xl bg-[#DDA23A] flex items-center justify-center text-[#013463] group-hover:scale-110 transition-transform duration-300">
-                  {p.icon}
-                </div>
+                <span className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full ${p.dark ? 'bg-white/10 text-white/80' : 'bg-[#013463]/8 text-[#013463]'}`}>{p.tech}</span>
+                <div className="w-10 h-10 rounded-xl bg-[#DDA23A] flex items-center justify-center text-[#013463] group-hover:scale-110 transition-transform duration-300">{p.icon}</div>
               </div>
               <h3 className={`relative z-10 text-xl font-extrabold mb-3 ${p.dark ? 'text-white' : 'text-[#013463]'}`}>{p.title}</h3>
               <p className={`relative z-10 leading-relaxed text-sm ${p.dark ? 'text-white/70' : 'text-gray-500'}`}>{p.description}</p>
@@ -435,44 +372,31 @@ function Projects() {
 function Nujum() {
   const ref = useFadeIn(0);
   const videos = [
-    { id: "wu2oWKUMjhc", topic: "EP03 — Full Stack Development", author: "Ali Weber" },
-    { id: "nHjT8h-vJgA", topic: "EP06 — Android Engineering",   author: "Seid Shemsu" },
-    { id: "ltllWogkB6E", topic: "EP05 — AI Driven Innovation",  author: "Khalid Ebrahim" },
+    { id: "wu2oWKUMjhc", topic: "EP03 — Full Stack Development", author: "Ali Weber"      },
+    { id: "nHjT8h-vJgA", topic: "EP06 — Android Engineering",    author: "Seid Shemsu"   },
+    { id: "ltllWogkB6E", topic: "EP05 — AI Driven Innovation",   author: "Khalid Ebrahim"},
   ];
-
   return (
     <section className="py-20 sm:py-28 bg-[#013463] relative overflow-hidden" id="nujum">
       <div className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-10 bg-[#DDA23A] blur-3xl pointer-events-none" />
-
-      <div
-        ref={ref}
-        className="opacity-0 translate-y-10 transition-all duration-700 ease-out max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 relative z-10"
-      >
+      <div ref={ref} className="opacity-0 translate-y-10 transition-all duration-700 ease-out max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 relative z-10">
         <div className="text-center mb-14">
           <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-4">
-            <span className="w-6 h-px bg-[#DDA23A]" />
-            Webinar Series
-            <span className="w-6 h-px bg-[#DDA23A]" />
+            <span className="w-6 h-px bg-[#DDA23A]" />Webinar Series<span className="w-6 h-px bg-[#DDA23A]" />
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-white">Nujum al-Code</h2>
-          <p className="text-white/60 max-w-2xl mx-auto text-sm sm:text-base">
-            Deep technical dives with industry pioneers from the NSDA community.
-          </p>
+          <p className="text-white/60 max-w-2xl mx-auto text-sm sm:text-base">Deep technical dives with industry pioneers from the NSDA community.</p>
           <div className="w-16 h-1 bg-[#DDA23A] rounded-full mx-auto mt-5" />
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {videos.map((v) => (
             <div key={v.id} className="rounded-2xl overflow-hidden shadow-2xl bg-black/40 border border-white/10 hover:-translate-y-1 transition-all duration-300">
               <div className="relative pb-[56.25%] h-0">
-                <iframe
-                  className="absolute top-0 left-0 w-full h-full"
+                <iframe className="absolute top-0 left-0 w-full h-full"
                   src={`https://www.youtube.com/embed/${v.id}?rel=0&modestbranding=1`}
-                  title={v.topic}
-                  frameBorder="0"
+                  title={v.topic} frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+                  allowFullScreen />
               </div>
               <div className="p-4 border-t border-white/10">
                 <h4 className="text-white font-bold text-sm mb-1 line-clamp-1">{v.topic}</h4>
@@ -481,14 +405,9 @@ function Nujum() {
             </div>
           ))}
         </div>
-
         <div className="text-center">
-          <a
-            href="https://youtube.com/@NSDA_Community"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 px-8 py-4 font-bold text-sm uppercase tracking-wider rounded-full bg-[#DDA23A] text-[#013463] shadow-lg shadow-[#DDA23A]/20 hover:scale-105 transition-all duration-200"
-          >
+          <a href="https://youtube.com/@NSDA_Community" target="_blank" rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 px-8 py-4 font-bold text-sm uppercase tracking-wider rounded-full bg-[#DDA23A] text-[#013463] shadow-lg shadow-[#DDA23A]/20 hover:scale-105 transition-all duration-200">
             Watch All Episodes
             <span className="transition-transform duration-200 group-hover:translate-x-1"><IconArrow /></span>
           </a>
@@ -506,36 +425,32 @@ function Leadership() {
   const [showAll, setShowAll] = useState(false);
 
   const mainLeaders = [
-    { name: "Osama Seid",          role: "President",                    university: "Jimma University",      gender: "male",   icon: "fa-user-tie",   linkedin: "https://www.linkedin.com/in/osama-seid-a2978129a"         },
-    { name: "Nebiyou Elias",       role: "Vice President",               university: "AASTU",                 gender: "male",   icon: "fa-user",       linkedin: "https://www.linkedin.com/in/nebiyou-elias-mohammed/"      },
-    { name: "Abdelaziz Ebrahim",   role: "Content Head",                 university: "Bahir Dar University",  gender: "male",   icon: "fa-newspaper",  linkedin: "https://www.linkedin.com/in/abdelazizEbrahim/"            },
-    { name: "Sumeya Muhammed",     role: "Sisters Communication Head",   university: "Jimma University",      gender: "female", icon: "fa-comments",   linkedin: "http://linkedin.com/in/sumeya-muhammed-a83168319/"        },
-    { name: "Sumeya Awel",         role: "Sisters President",            university: "ASTU",                  gender: "female", icon: "fa-crown",      linkedin: "#"                                                         },
-    { name: "Miftah Fentaw",       role: "Communication Head",           university: "Haramaya University",   gender: "male",   icon: "fa-bullhorn",   linkedin: "https://www.linkedin.com/in/miftah-fentaw/"               },
+    { name: "Osama Seid",        role: "President",                  university: "Jimma University",       gender: "male",   icon: "fa-user-tie",  linkedin: "https://www.linkedin.com/in/osama-seid-a2978129a"        },
+    { name: "Nebiyou Elias",     role: "Vice President",             university: "AASTU",                  gender: "male",   icon: "fa-user",      linkedin: "https://www.linkedin.com/in/nebiyou-elias-mohammed/"     },
+    { name: "Abdelaziz Ebrahim", role: "Content Head",               university: "Bahir Dar University",   gender: "male",   icon: "fa-newspaper", linkedin: "https://www.linkedin.com/in/abdelazizEbrahim/"           },
+    { name: "Sumeya Muhammed",   role: "Sisters Communication Head", university: "Jimma University",       gender: "female", icon: "fa-comments",  linkedin: "http://linkedin.com/in/sumeya-muhammed-a83168319/"       },
+    { name: "Sumeya Awel",       role: "Sisters President",          university: "ASTU",                   gender: "female", icon: "fa-crown",     linkedin: "https://www.linkedin.com/in/sumeya-awel-320286306?"      },
+    { name: "Miftah Fentaw",     role: "Communication Head",         university: "Haramaya University",    gender: "male",   icon: "fa-bullhorn",  linkedin: "https://www.linkedin.com/in/miftah-fentaw/"              },
   ];
 
   const moreLeaders = [
-    { name: "Semeriya Seid", icon: "fa-video",       role: "Sisters Production Head",      university: "Haramaya University",   gender: "female", linkedin: "https://www.linkedin.com/in/sud-seid-b24b48356/"          },
-    { name: "Fozia Mohammed", icon: "fa-tasks",      role: "Sisters Project Head",         university: "Addis Ababa University", gender: "female", linkedin: "https://www.linkedin.com/in/fozia-mohammed-50132730b/"   },
-    { name: "Hanan Nasir", icon: "fa-pen-fancy",         role: "Sisters Content Head",         university: "Arba Minch University", gender: "female", linkedin: "https://www.linkedin.com/in/hanan-nasir2014"              },
-    { name: "Muaz Sani", icon: "fa-video",           role: "Production Head",              university: "Jimma University",      gender: "male",   linkedin: "#"                                                         },
-    { name: "Abdulselam Kemal", icon: "fa-microchip",    role: "Technical Head",               university: "Addis Ababa University", gender: "male",  linkedin: "https://www.linkedin.com/in/ab-adam74"                    },
-    { name: "Rehmet Muhammed", icon: "fa-code",     role: "Sisters Technical Head",       university: "Bahir Dar University",  gender: "female", linkedin: "https://www.linkedin.com/in/rehmet-muhammed777"           },
-    { name: "Abdulaziz Ayalew", icon: "fa-newspaper",    role: "Content Head",                 university: "AASTU",                 gender: "male",   linkedin: "https://www.linkedin.com/in/abdulaziz-ayalew"             },
-    { name: "Sitra Seyfu", icon: "fa-video",         role: "Sisters Production Head",      university: "Jimma University",      gender: "female", linkedin: "#"                                                         },
-    { name: "Imadudin Keremu", icon: "fa-tasks",     role: "Project Manager",              university: "Haramaya University",   gender: "male",   linkedin: "#"                                                         },
+    { name: "Semeriya Seid",     role: "Sisters Production Head", university: "Haramaya University",    gender: "female", icon: "fa-video",     linkedin: "https://www.linkedin.com/in/sud-seid-b24b48356/"         },
+    { name: "Fozia Mohammed",    role: "Sisters Project Head",    university: "Addis Ababa University",  gender: "female", icon: "fa-tasks",     linkedin: "https://www.linkedin.com/in/fozia-mohammed-50132730b/"  },
+    { name: "Hanan Nasir",       role: "Sisters Content Head",    university: "Arba Minch University",   gender: "female", icon: "fa-pen-fancy", linkedin: "https://www.linkedin.com/in/hanan-nasir2014"             },
+    { name: "Muaz Sani",         role: "Production Head",         university: "Jimma University",        gender: "male",   icon: "fa-video",     linkedin: "https://www.linkedin.com/in/muaz-sani-85643a2b2?"       },
+    { name: "Abdulselam Kemal",  role: "Technical Head",          university: "Addis Ababa University",  gender: "male",   icon: "fa-microchip", linkedin: "https://www.linkedin.com/in/ab-adam74"                   },
+    { name: "Rehmet Muhammed",   role: "Sisters Technical Head",  university: "Bahir Dar University",    gender: "female", icon: "fa-code",      linkedin: "https://www.linkedin.com/in/rehmet-muhammed777"          },
+    { name: "Abdulaziz Ayalew",  role: "Content Head",            university: "AASTU",                   gender: "male",   icon: "fa-newspaper", linkedin: "https://www.linkedin.com/in/abdulaziz-ayalew"            },
+    { name: "Sitra Seyfu",       role: "Sisters Production Head", university: "Jimma University",        gender: "female", icon: "fa-video",     linkedin: "https://www.linkedin.com/in/sitra-seyfu-a727b3324?"     },
+    { name: "Imadudin Keremu",   role: "Project Manager",         university: "Haramaya University",     gender: "male",   icon: "fa-tasks",     linkedin: "https://www.linkedin.com/in/imadudin-keremu-72630a325?" },
   ];
 
-  const getIconColor = (gender) => {
-    if (gender === 'male')   return '#3498db';
-    if (gender === 'female') return '#e91e63';
-    return '#DDA23A';
-  };
+  const getIconColor = (gender) => gender === 'female' ? '#e91e63' : '#3498db';
 
   const MemberCard = ({ member }) => (
     <a
-      href={member.linkedin !== '#' ? member.linkedin : undefined}
-      target={member.linkedin !== '#' ? "_blank" : undefined}
+      href={member.linkedin}
+      target="_blank"
       rel="noopener noreferrer"
       className="group text-center block transition-all duration-300 hover:-translate-y-2"
     >
@@ -546,11 +461,9 @@ function Leadership() {
         >
           <i className={`fas ${member.icon}`} />
         </div>
-        {member.linkedin !== '#' && (
-          <span className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#DDA23A] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20 text-white">
-            <IconLinkedin />
-          </span>
-        )}
+        <span className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#DDA23A] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20 text-white">
+          <IconLinkedin />
+        </span>
       </div>
       <h5 className="font-bold text-xs md:text-sm text-[#013463] leading-tight">{member.name}</h5>
       <p className="text-[10px] md:text-xs font-semibold mt-0.5 text-[#DDA23A]">{member.role}</p>
@@ -560,36 +473,25 @@ function Leadership() {
 
   return (
     <section className="py-20 sm:py-28 bg-[#f6f9fd] relative" id="leadership">
-      <div
-        ref={ref}
-        className="opacity-0 translate-y-10 transition-all duration-700 ease-out max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32"
-      >
+      <div ref={ref} className="opacity-0 translate-y-10 transition-all duration-700 ease-out max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
         <div className="text-center mb-14">
           <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-4">
-            <span className="w-6 h-px bg-[#DDA23A]" />
-            Leadership
-            <span className="w-6 h-px bg-[#DDA23A]" />
+            <span className="w-6 h-px bg-[#DDA23A]" />Leadership<span className="w-6 h-px bg-[#DDA23A]" />
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-[#013463]">Guided by Visionaries</h2>
           <div className="w-16 h-1 bg-[#DDA23A] rounded-full mx-auto" />
         </div>
 
-        {/* Main leaders */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
           {mainLeaders.map((m, i) => <MemberCard key={i} member={m} />)}
         </div>
 
-        {/* Expandable more leaders — NO horizontal line */}
-        <div
-          className="overflow-hidden transition-all duration-500"
-          style={{ maxHeight: showAll ? '1200px' : '0', opacity: showAll ? 1 : 0 }}
-        >
+        <div className="overflow-hidden transition-all duration-500" style={{ maxHeight: showAll ? '1200px' : '0', opacity: showAll ? 1 : 0 }}>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-8 mt-10">
             {moreLeaders.map((m, i) => <MemberCard key={i} member={m} />)}
           </div>
         </div>
 
-        {/* Show More/Less button ALWAYS at the bottom */}
         <div className="flex justify-center mt-10">
           <button
             onClick={() => setShowAll(p => !p)}
@@ -599,7 +501,6 @@ function Leadership() {
             <IconChevron up={showAll} />
           </button>
         </div>
-
       </div>
     </section>
   );
@@ -611,41 +512,27 @@ function Leadership() {
 function CTA() {
   const ref = useFadeIn(0);
   return (
-    <section className="py-20 sm:py-28 bg-[#013463] relative overflow-hidden">
+    <section className="py-20 sm:py-28 bg-[#f6f9fd] relative overflow-hidden">
       <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full opacity-5 bg-[#DDA23A] blur-3xl pointer-events-none" />
-      <div
-        ref={ref}
-        className="opacity-0 translate-y-10 transition-all duration-700 ease-out max-w-4xl mx-auto px-6 sm:px-10 text-center relative z-10"
-      >
+      <div ref={ref} className="opacity-0 translate-y-10 transition-all duration-700 ease-out max-w-4xl mx-auto px-6 sm:px-10 text-center relative z-10">
         <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-5">
-          <span className="w-5 h-px bg-[#DDA23A]" />
-          Join the Movement
-          <span className="w-5 h-px bg-[#DDA23A]" />
+          <span className="w-5 h-px bg-[#DDA23A]" />Join the Movement<span className="w-5 h-px bg-[#DDA23A]" />
         </span>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-5 text-white leading-tight">
-          Ready to Build for the{' '}
-          <span className="text-[#DDA23A]">Ummah?</span>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-5 text-[#013463] leading-tight">
+          Ready to Build for the <span className="text-[#DDA23A]">Ummah?</span>
         </h2>
-        <p className="text-white/60 text-sm sm:text-base leading-relaxed max-w-xl mx-auto mb-10">
+        <p className="text-gray-500 text-sm sm:text-base leading-relaxed max-w-xl mx-auto mb-10">
           Join 80+ Muslim developers across the country. Be part of a community that grows together, codes together, and prays together.
         </p>
         <div className="w-16 h-1 bg-[#DDA23A] rounded-full mx-auto mb-10" />
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href="https://t.me/nsda_community"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#DDA23A] px-10 py-4 text-sm font-bold text-[#013463] shadow-lg shadow-[#DDA23A]/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-yellow-400 active:scale-95"
-          >
+          <a href="https://t.me/nsda_community" target="_blank" rel="noopener noreferrer"
+            className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#DDA23A] px-10 py-4 text-sm font-bold text-[#013463] shadow-lg shadow-[#DDA23A]/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-yellow-400 active:scale-95">
             JOIN NSDA NOW
             <span className="transition-transform duration-200 group-hover:translate-x-1"><IconArrow /></span>
           </a>
-          <a
-            href="https://t.me/NejmAskBot"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-full border-2 border-[#DDA23A]/60 bg-transparent px-10 py-4 text-sm font-bold text-white transition-all duration-200 hover:border-[#DDA23A] hover:bg-[#DDA23A] hover:text-[#013463] active:scale-95"
-          >
+          <a href="https://t.me/NejmAskBot" target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center justify-center rounded-full border-2 border-[#013463] bg-transparent px-10 py-4 text-sm font-bold text-[#013463] transition-all duration-200 hover:bg-[#013463] hover:text-white active:scale-95">
             TELEGRAM SUPPORT
           </a>
         </div>

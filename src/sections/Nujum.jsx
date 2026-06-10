@@ -198,7 +198,7 @@ export default function Nujum() {
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <img src={star} alt="" aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover select-none z-0" />
-        <div className="absolute inset-0 z-0 bg-white/25" />
+        <div className="absolute inset-0 z-0 bg-white/5" />
         <div className="absolute -right-32 -top-32 w-[500px] h-[500px] rounded-full border-2 border-[#013463]/40 z-0 hidden lg:block" />
         <div className="absolute -right-16 -top-16 w-[320px] h-[320px] rounded-full border-2 border-[#DDA23A]/40 z-0 hidden lg:block" />
 
@@ -243,20 +243,8 @@ export default function Nujum() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  onClick={() => setSelected(latestEpisode)}
-                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#DDA23A] px-8 py-4 text-sm font-bold text-[#013463] shadow-lg shadow-[#DDA23A]/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-yellow-400 active:scale-95"
-                >
-                  <IconPlay />
-                  Watch Latest Episode
-                </button>
-                <button
-                  onClick={() => document.getElementById("archive")?.scrollIntoView({ behavior: "smooth" })}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#013463] bg-white/60 px-8 py-4 text-sm font-bold text-[#013463] transition-all duration-200 hover:bg-[#013463] hover:text-white active:scale-95"
-                >
-                  Browse All Episodes
-                  <IconArrow />
-                </button>
+                
+               
               </div>
             </div>
 

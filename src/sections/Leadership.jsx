@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { leadershipMembers } from '../data/leadership';
 import star from '../assets/star.jpg';
+import { leadershipMembers } from '../data/leadership';
 
-/* ─── fade-in hook ─── */
+/* data lives in src/data/leadership.js */
 function useFadeIn(delay = 0) {
   const ref = useRef(null);
   useEffect(() => {
@@ -23,11 +23,9 @@ function useFadeIn(delay = 0) {
   return ref;
 }
 
-/* ─── DiceBear avatar ─── */
-function getAvatarUrl(name) {
-  const seed = encodeURIComponent(String(name).toLowerCase());
-  return `https://api.dicebear.com/6.x/pixel-art/svg?seed=${seed}&backgroundType=solid&backgroundColor=%23013463`;
-}
+/* ─── icon color by gender ─── */
+const getIconColor = (gender) =>
+  gender === 'female' ? '#e91e63' : '#3498db';
 
 /* ─── icons ─── */
 const IconArrow = () => (
@@ -41,50 +39,63 @@ const IconLinkedin = () => (
   </svg>
 );
 
-/* ─── Member Card ─── */
-function MemberCard({ member, size = 'md' }) {
-  const isLg = size === 'lg';
-  return (
-    <Link
-      to={`/leadership/${member.id}`}
-      className="group relative bg-white border border-gray-100 rounded-[1.75rem] overflow-visible shadow-sm hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 flex flex-col items-center text-center"
-    >
-      {/* gold accent bar */}
-      <span className="absolute top-0 left-1/2 -translate-x-1/2 h-[3px] w-12 bg-[#DDA23A] rounded-b-full" />
+/* ─── Member Card — opens LinkedIn directly on click ─── */
+function MemberCard({ member, dark = false }) {
+  const hasLink = Boolean(member.linkedin);
 
-      {/* avatar */}
-      <div className={`mt-8 ${isLg ? 'w-20 h-20 sm:w-24 sm:h-24' : 'w-16 h-16 sm:w-20 sm:h-20'} rounded-full overflow-hidden border-4 border-[#f6f9fd] shadow-lg group-hover:border-[#DDA23A] transition-colors duration-300 flex-shrink-0`}>
-        <img
-          src={getAvatarUrl(member.name)}
-          alt={member.name}
-          className="w-full h-full object-cover"
-        />
+  const sharedClass = `group relative rounded-[1.75rem] overflow-hidden transition-all duration-300 flex flex-col items-center text-center p-6 pt-7
+    ${hasLink ? 'cursor-pointer hover:-translate-y-2 hover:shadow-2xl' : 'cursor-default'}
+    ${dark
+      ? 'bg-white/8 border border-white/10 hover:bg-white/15 hover:border-[#DDA23A]/40'
+      : 'bg-white border border-gray-100 shadow-sm'}`;
+
+  const body = (
+    <>
+      <span className="absolute top-0 left-1/2 -translate-x-1/2 h-[3px] w-10 bg-[#DDA23A] rounded-b-full" />
+      <div
+        className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center text-xl sm:text-2xl mb-4 transition-all duration-300 group-hover:ring-4 group-hover:ring-[#DDA23A]/50 flex-shrink-0"
+        style={{ backgroundColor: 'rgba(1,52,99,0.08)', color: getIconColor(member.gender) }}
+      >
+        <i className={`fas ${member.icon}`} />
       </div>
-
-      {/* info */}
-      <div className="px-5 pb-6 pt-3 space-y-1.5 w-full">
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#DDA23A]">{member.role}</p>
-        <h3 className={`font-extrabold text-[#013463] leading-tight ${isLg ? 'text-base sm:text-lg' : 'text-sm sm:text-base'}`}>{member.name}</h3>
-        <p className="text-[11px] text-gray-400 leading-tight">{member.university}</p>
-
-        {/* view profile link */}
-        <div className="pt-2 flex items-center justify-center gap-1.5 text-xs font-bold text-[#013463] group-hover:text-[#DDA23A] transition-colors duration-200">
-          <span>View Profile</span>
+      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#DDA23A] mb-1">{member.role}</p>
+      <h3 className={`font-extrabold text-sm sm:text-base leading-tight mb-1 ${dark ? 'text-white' : 'text-[#013463]'}`}>
+        {member.name}
+      </h3>
+      <p className={`text-[11px] leading-tight mb-3 ${dark ? 'text-white/50' : 'text-gray-400'}`}>
+        {member.university}
+      </p>
+      {hasLink ? (
+        <div className={`flex items-center gap-1.5 text-xs font-bold transition-colors duration-200
+          ${dark ? 'text-white/50 group-hover:text-[#DDA23A]' : 'text-[#013463] group-hover:text-[#DDA23A]'}`}>
+          <IconLinkedin />
+          <span>LinkedIn</span>
           <span className="transition-transform duration-200 group-hover:translate-x-1"><IconArrow /></span>
         </div>
-      </div>
-    </Link>
+      ) : (
+        <span className={`text-[10px] ${dark ? 'text-white/25' : 'text-gray-300'}`}>No profile yet</span>
+      )}
+    </>
   );
+
+  if (hasLink) {
+    return (
+      <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className={sharedClass}>
+        {body}
+      </a>
+    );
+  }
+  return <div className={sharedClass}>{body}</div>;
 }
 
 /* ════════════════════════════════════════════════
    LEADERSHIP PAGE
 ════════════════════════════════════════════════ */
 export default function Leadership() {
-  const heroRef    = useFadeIn(0);
+  const heroRef     = useFadeIn(0);
   const foundersRef = useFadeIn(0);
-  const batchRef   = useFadeIn(0);
-  const valuesRef  = useFadeIn(0);
+  const batchRef    = useFadeIn(0);
+  const valuesRef   = useFadeIn(0);
 
   const founders    = leadershipMembers.filter(m => m.group === 'Founders');
   const secondBatch = leadershipMembers.filter(m => m.group === '2nd Batch');
@@ -93,7 +104,7 @@ export default function Leadership() {
     <main className="bg-[#f6f9fd] text-[#013463] overflow-x-hidden">
 
       {/* ══════════════════════════════════════════
-          1. HERO — star bg, consistent with all pages
+          1. HERO — star bg, text only, no card
       ══════════════════════════════════════════ */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <img src={star} alt="" aria-hidden="true"
@@ -104,94 +115,62 @@ export default function Leadership() {
 
         <div
           ref={heroRef}
-          className="opacity-0 translate-y-10 transition-all duration-700 ease-out w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32"
-          style={{ position:'relative', zIndex:10, paddingTop:'8rem', paddingBottom:'8rem' }}
+          className="opacity-0 translate-y-10 transition-all duration-700 ease-out w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 py-20 md:py-0"
+          style={{ position:'relative', zIndex:10 }}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="md:min-h-0 md:py-28 flex flex-col justify-center max-w-3xl">
 
-            {/* Left */}
-            <div className="space-y-7">
-              <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-[#DDA23A]">
-                <span className="inline-block w-6 h-px bg-[#DDA23A]" />
-                NSDA Leadership
-              </span>
+            <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-6">
+              <span className="inline-block w-6 h-px bg-[#DDA23A]" />
+              NSDA Leadership
+            </span>
 
-              <h1 className="font-extrabold text-[#013463] text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] leading-[1.1] tracking-tight">
-                Our{' '}
-                <span className="relative inline-block text-[#DDA23A]">
-                  Leadership
-                  <span className="absolute -bottom-1 left-0 w-full h-[3px] bg-[#DDA23A]/40 rounded-full" />
-                </span>{' '}
-                Team
-              </h1>
+            <h1 className="font-extrabold text-[#013463] text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] leading-[1.1] tracking-tight mb-6 md:mb-8">
+              Our{' '}
+              <span className="relative inline-block text-[#DDA23A]">
+                Leadership
+                <span className="absolute -bottom-1 left-0 w-full h-[3px] bg-[#DDA23A]/40 rounded-full" />
+              </span>{' '}
+              Team
+            </h1>
 
-              <p className="text-gray-600 text-base sm:text-lg leading-relaxed max-w-lg">
-                The team that applies academic rigor, community stewardship, and creative strategy to empower the next generation of Muslim developers across Ethiopia.
-              </p>
+            <p className="text-gray-600 text-base sm:text-lg leading-relaxed max-w-xl mb-8 md:mb-10">
+              The team that applies academic rigor, community stewardship, and creative strategy to empower the next generation of Muslim developers across Ethiopia.
+            </p>
 
-              {/* stats */}
-              <div className="flex flex-wrap gap-8 sm:gap-12">
-                {[
-                  { value: '22+', label: 'Total Members'  },
-                  { value: '14',  label: 'Founders'       },
-                  { value: '8',   label: 'Emerging Leaders'},
-                ].map(({ value, label }) => (
-                  <div key={label} className="flex flex-col">
-                    <span className="text-[#DDA23A] font-extrabold text-2xl sm:text-3xl leading-none">{value}</span>
-                    <span className="text-[#013463] text-xs uppercase tracking-widest mt-1 font-semibold">{label}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* trust badges */}
-              <div className="flex flex-wrap gap-3">
-                {['Faith-Driven', 'Community-Led', 'Multi-University'].map(b => (
-                  <span key={b} className="inline-flex items-center gap-1.5 bg-white/70 border border-gray-200 px-3 py-1.5 rounded-full text-xs font-semibold text-[#013463]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#DDA23A]" />
-                    {b}
-                  </span>
-                ))}
-              </div>
+            {/* stats row */}
+            <div className="flex flex-wrap gap-8 sm:gap-12 mb-8 md:mb-10">
+              {[
+               
+                { value: '14',  label: 'Founders'        },
+                { value: '8+',   label: 'Emerging Leaders'},
+                { value: '15+', label: 'Universities'    },
+              ].map(({ value, label }) => (
+                <div key={label} className="flex flex-col">
+                  <span className="text-[#DDA23A] font-extrabold text-2xl sm:text-3xl leading-none">{value}</span>
+                  <span className="text-[#013463] text-xs uppercase tracking-widest mt-1 font-semibold">{label}</span>
+                </div>
+              ))}
             </div>
 
-            {/* Right — stats card */}
-            <div className="relative hidden md:block">
-              <div className="bg-white border border-gray-100 rounded-[2rem] p-7 shadow-xl space-y-5">
-                {/* dark impact card */}
-                <div className="bg-[#013463] rounded-2xl p-6 text-white relative overflow-hidden">
-                  <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-white/5" />
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#DDA23A] to-transparent" />
-                  <p className="text-[10px] uppercase tracking-[0.26em] text-[#DDA23A] font-bold">Leadership Impact</p>
-                  <h2 className="mt-3 text-3xl font-extrabold">22+ Members</h2>
-                  <p className="mt-2 text-sm text-white/60 leading-relaxed">Representing multiple universities across Ethiopia.</p>
-                </div>
+            {/* trust badges */}
+            <div className="flex flex-wrap gap-3 mb-10">
+              {['Faith-Driven', 'Community-Led', 'Multi-University'].map(b => (
+                <span key={b} className="inline-flex items-center gap-1.5 bg-white/70 border border-gray-200 px-3 py-1.5 rounded-full text-xs font-semibold text-[#013463]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#DDA23A]" />
+                  {b}
+                </span>
+              ))}
+            </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-[#f6f9fd] rounded-2xl p-5 text-center border border-gray-100">
-                    <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2">Founders</p>
-                    <p className="text-4xl font-extrabold text-[#013463]">14</p>
-                  </div>
-                  <div className="bg-[#fff7df] rounded-2xl p-5 text-center border border-yellow-100">
-                    <p className="text-[10px] uppercase tracking-widest text-[#7f5600] font-bold mb-2">2nd Batch</p>
-                    <p className="text-4xl font-extrabold text-[#013463]">8</p>
-                  </div>
-                </div>
-
-                <div className="bg-[#f6f9fd] rounded-2xl p-5 border border-gray-100">
-                  <p className="text-[10px] uppercase tracking-[0.22em] text-[#013463] font-bold mb-2">Why We Lead</p>
-                  <p className="text-sm text-gray-500 leading-relaxed">
-                    We lead by creating programs, producing media, and building technical systems that support sisters, student mentors, and aspiring developers.
-                  </p>
-                </div>
-              </div>
+            <div className="flex flex-col sm:flex-row gap-4">
+             
             </div>
 
           </div>
         </div>
 
-        {/* bottom fade */}
         <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#f6f9fd] to-transparent pointer-events-none" style={{ zIndex:10 }} />
-        {/* scroll hint */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce" style={{ zIndex:20 }}>
           <span className="w-px h-8 bg-[#013463]/30" />
           <span className="w-1.5 h-1.5 rounded-full bg-[#013463]/50" />
@@ -202,96 +181,65 @@ export default function Leadership() {
       {/* ══════════════════════════════════════════
           2. FOUNDING LEADERSHIP
       ══════════════════════════════════════════ */}
-      <section className="py-20 sm:py-28 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 bg-[#f6f9fd]">
+      <section className="py-16 sm:py-24 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 bg-[#f6f9fd]">
         <div className="max-w-7xl mx-auto">
-          <div
-            ref={foundersRef}
-            className="opacity-0 translate-y-10 transition-all duration-700 ease-out"
-          >
-            {/* heading */}
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
+          <div ref={foundersRef} className="opacity-0 translate-y-10 transition-all duration-700 ease-out">
+
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 sm:mb-12">
               <div>
                 <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-3">
                   <span className="inline-block w-6 h-px bg-[#DDA23A]" />
                   Founding Team
                 </span>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#013463] leading-tight">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#013463] leading-tight">
                   Founding{' '}
                   <span className="relative inline-block">
                     <span className="relative z-10">Leadership</span>
-                    <span className="absolute bottom-0 left-0 w-full h-[6px] bg-[#DDA23A]/30 rounded-full -z-0" />
+                    <span className="absolute bottom-0 left-0 w-full h-[5px] bg-[#DDA23A]/30 rounded-full -z-0" />
                   </span>
                 </h2>
-                <p className="mt-3 text-gray-500 text-sm sm:text-base max-w-xl leading-relaxed">
+                <p className="mt-2 text-gray-500 text-sm max-w-xl leading-relaxed">
                   These members established NSDA's vision and continue to guide the community with purpose and creativity.
                 </p>
               </div>
-              <span className="text-[10px] uppercase tracking-[0.28em] text-[#DDA23A] font-bold whitespace-nowrap self-end pb-1 hidden sm:block">
+              <span className="text-[10px] uppercase tracking-[0.28em] text-[#DDA23A] font-bold hidden sm:block pb-1">
                 Click any card to view profile
               </span>
             </div>
 
-            {/* grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6">
-              {founders.map(m => (
-                <MemberCard key={m.id} member={m} size="lg" />
-              ))}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5">
+              {founders.map(m => <MemberCard key={m.id} member={m} dark={false} />)}
             </div>
+
           </div>
         </div>
       </section>
 
 
       {/* ══════════════════════════════════════════
-          3. EMERGING LEADERS (2nd Batch) — navy bg
+          3. EMERGING LEADERS — navy bg
       ══════════════════════════════════════════ */}
-      <section className="py-20 sm:py-28 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 bg-[#013463]">
+      <section className="py-16 sm:py-24 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 bg-[#013463]">
         <div className="max-w-7xl mx-auto">
-          <div
-            ref={batchRef}
-            className="opacity-0 translate-y-10 transition-all duration-700 ease-out"
-          >
-            {/* heading */}
-            <div className="mb-12">
+          <div ref={batchRef} className="opacity-0 translate-y-10 transition-all duration-700 ease-out">
+
+            <div className="mb-10 sm:mb-12">
               <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-3">
                 <span className="inline-block w-6 h-px bg-[#DDA23A]" />
                 2nd Batch
               </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight">
-                Emerging{' '}
-                <span className="text-[#DDA23A]">Leaders</span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                Emerging <span className="text-[#DDA23A]">Leaders</span>
               </h2>
-              <p className="mt-3 text-white/60 text-sm sm:text-base max-w-xl leading-relaxed">
+              <p className="mt-2 text-white/60 text-sm max-w-xl leading-relaxed">
                 Our second batch brings fresh energy, new voices, and a strong commitment to sisterhood and technical excellence.
               </p>
             </div>
 
-            {/* cards — white on dark bg */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
-              {secondBatch.map(m => (
-                <Link
-                  key={m.id}
-                  to={`/leadership/${m.id}`}
-                  className="group relative bg-white/8 border border-white/10 rounded-[1.75rem] overflow-visible hover:-translate-y-2 hover:bg-white/15 hover:border-[#DDA23A]/40 transition-all duration-300 flex flex-col items-center text-center"
-                >
-                  <span className="absolute top-0 left-1/2 -translate-x-1/2 h-[3px] w-10 bg-[#DDA23A] rounded-b-full" />
-
-                  <div className="mt-8 w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-4 border-white/10 group-hover:border-[#DDA23A] transition-colors duration-300 shadow-lg flex-shrink-0">
-                    <img src={getAvatarUrl(m.name)} alt={m.name} className="w-full h-full object-cover" />
-                  </div>
-
-                  <div className="px-4 pb-6 pt-3 space-y-1.5 w-full">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#DDA23A]">{m.role}</p>
-                    <h3 className="font-extrabold text-white text-sm sm:text-base leading-tight">{m.name}</h3>
-                    <p className="text-[11px] text-white/50 leading-tight">{m.university}</p>
-                    <div className="pt-2 flex items-center justify-center gap-1.5 text-xs font-bold text-white/50 group-hover:text-[#DDA23A] transition-colors duration-200">
-                      <span>View Profile</span>
-                      <span className="transition-transform duration-200 group-hover:translate-x-1"><IconArrow /></span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-5">
+              {secondBatch.map(m => <MemberCard key={m.id} member={m} dark={true} />)}
             </div>
+
           </div>
         </div>
       </section>
@@ -300,119 +248,87 @@ export default function Leadership() {
       {/* ══════════════════════════════════════════
           4. GUIDED BY VALUES
       ══════════════════════════════════════════ */}
-      <section className="py-20 sm:py-28 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 bg-[#f6f9fd]">
+      <section className="py-16 sm:py-24 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 bg-[#f6f9fd]">
         <div className="max-w-7xl mx-auto">
-          <div
-            ref={valuesRef}
-            className="opacity-0 translate-y-10 transition-all duration-700 ease-out"
-          >
-            <div className="text-center mb-14">
+          <div ref={valuesRef} className="opacity-0 translate-y-10 transition-all duration-700 ease-out">
+
+            <div className="text-center mb-12">
               <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-3">
                 <span className="inline-block w-6 h-px bg-[#DDA23A]" />
                 Principles
                 <span className="inline-block w-6 h-px bg-[#DDA23A]" />
               </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#013463] mb-4">
-                Guided by{' '}
-                <span className="text-[#DDA23A]">Values</span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#013463] mb-3">
+                Guided by <span className="text-[#DDA23A]">Values</span>
               </h2>
               <p className="text-gray-500 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-                Our leadership is rooted in service, discipline, knowledge sharing, and a strong commitment to faith-driven excellence.
+                Our leadership is rooted in service, discipline, knowledge sharing, and faith-driven excellence.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
               {[
-                {
-                  title: 'Faith & Excellence',
-                  body:  'We pursue ihsan in every project, decision, and interaction, striving for the highest standard of moral and professional conduct.',
-                  dark:  true,
-                  gold:  false,
-                },
-                {
-                  title: 'Discipline',
-                  body:  'We value consistency, responsibility, and quality in our work, ensuring that our academic rigour translates into tangible results.',
-                  dark:  false,
-                  gold:  false,
-                },
-                {
-                  title: 'Knowledge Sharing',
-                  body:  'We uplift one another through open mentorship and collaborative learning, fostering a community of continuous intellectual growth.',
-                  dark:  false,
-                  gold:  false,
-                },
-                {
-                  title: 'Service to Ummah',
-                  body:  'We build technology and communication platforms that bring lasting benefit to our communities and global society.',
-                  dark:  false,
-                  gold:  true,
-                },
-              ].map(({ title, body, dark, gold }) => (
-                <div
-                  key={title}
-                  className={`relative rounded-2xl p-7 overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-300
-                    ${dark ? 'bg-[#013463] text-white shadow-lg'
-                    : gold ? 'bg-[#DDA23A] text-[#013463] shadow-lg'
-                    : 'bg-white border border-gray-100 shadow-sm text-[#013463]'}`}
+                { title: 'Faith & Excellence', body: 'We pursue ihsan in every project, decision, and interaction, striving for the highest moral and professional standard.', style: 'dark' },
+                { title: 'Discipline',          body: 'Consistency, responsibility, and quality in our work — ensuring academic rigour translates into tangible results.',         style: 'light' },
+                { title: 'Knowledge Sharing',   body: 'We uplift one another through open mentorship and collaborative learning, fostering continuous intellectual growth.',       style: 'light' },
+                { title: 'Service to Ummah',    body: 'We build technology and communication platforms that bring lasting benefit to our communities and global society.',          style: 'gold' },
+              ].map(({ title, body, style }) => (
+                <div key={title} className={`relative rounded-2xl p-6 sm:p-7 overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-300
+                  ${style === 'dark'  ? 'bg-[#013463] text-white shadow-lg'
+                  : style === 'gold'  ? 'bg-[#DDA23A] text-[#013463] shadow-lg'
+                  : 'bg-white border border-gray-100 shadow-sm'}`}
                 >
-                  <span className="absolute top-0 left-8 h-[3px] w-10 rounded-b-full"
-                    style={{ backgroundColor: dark ? '#DDA23A' : gold ? '#013463' : '#DDA23A' }} />
-                  {(dark || gold) && (
-                    <div className="absolute -bottom-8 -right-8 w-28 h-28 rounded-full bg-white/10" />
+                  <span className="absolute top-0 left-7 h-[3px] w-10 rounded-b-full"
+                    style={{ backgroundColor: style === 'light' ? '#DDA23A' : style === 'gold' ? '#013463' : '#DDA23A' }} />
+                  {(style === 'dark' || style === 'gold') && (
+                    <div className="absolute -bottom-7 -right-7 w-24 h-24 rounded-full bg-white/10" />
                   )}
-                  <h3 className={`relative z-10 text-lg font-extrabold mb-3
-                    ${dark ? 'text-white' : gold ? 'text-[#013463]' : 'text-[#013463]'}`}>
+                  <h3 className={`relative z-10 text-base sm:text-lg font-extrabold mb-3
+                    ${style === 'dark' ? 'text-white' : style === 'gold' ? 'text-[#013463]' : 'text-[#013463]'}`}>
                     {title}
                   </h3>
                   <p className={`relative z-10 text-sm leading-relaxed
-                    ${dark ? 'text-white/70' : gold ? 'text-[#013463]/80' : 'text-gray-500'}`}>
+                    ${style === 'dark' ? 'text-white/70' : style === 'gold' ? 'text-[#013463]/80' : 'text-gray-500'}`}>
                     {body}
                   </p>
                 </div>
               ))}
             </div>
+
           </div>
         </div>
       </section>
 
 
-      {/* ══════════════════════════════════════════
-          5. BOTTOM CTA
-      ══════════════════════════════════════════ */}
-      <section className="bg-[#013463] py-20 sm:py-28 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
-        <div className="max-w-7xl mx-auto text-center">
-          <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-5">
-            <span className="inline-block w-5 h-px bg-[#DDA23A]" />
-            Get Involved
-            <span className="inline-block w-5 h-px bg-[#DDA23A]" />
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-5 leading-tight">
-            Ready to code for a{' '}
-            <span className="text-[#DDA23A]">higher purpose?</span>
-          </h2>
-          <p className="text-white/60 text-sm sm:text-base leading-relaxed max-w-xl mx-auto mb-8">
-            Join a community that puts faith at the centre of every commit. Build tools that matter, with people who care.
-          </p>
-          <div className="w-16 h-1 bg-[#DDA23A] rounded-full mx-auto mb-10" />
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="/register"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#DDA23A] px-10 py-4 text-sm font-bold text-[#013463] shadow-lg shadow-[#DDA23A]/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-yellow-400 active:scale-95"
-            >
-              Become a Member
-              <span className="transition-transform duration-200 group-hover:translate-x-1"><IconArrow /></span>
-            </a>
-            <a
-              href="https://t.me/nsda_community"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-full border-2 border-[#DDA23A]/60 bg-transparent px-10 py-4 text-sm font-bold text-white transition-all duration-200 hover:border-[#DDA23A] hover:bg-[#DDA23A] hover:text-[#013463] active:scale-95"
-            >
-              Join Telegram Channel
-            </a>
-          </div>
-        </div>
-      </section>
+   {/* 5. BOTTOM CTA
+══════════════════════════════════════════ */}
+<section className="bg-[#F6F9FD] py-16 sm:py-24 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
+  <div className="max-w-7xl mx-auto text-center">
+    <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-5">
+      <span className="inline-block w-5 h-px bg-[#DDA23A]" />
+      Get Involved
+      <span className="inline-block w-5 h-px bg-[#DDA23A]" />
+    </span>
+    <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-[#013463] mb-5 leading-tight">
+      Ready to code for a <span className="text-[#DDA23A]">higher purpose?</span>
+    </h2>
+    <p className="text-[#013463]/70 text-sm sm:text-base leading-relaxed max-w-xl mx-auto mb-8">
+      Join a community that puts faith at the centre of every commit. Build tools that matter, with people who care.
+    </p>
+    <div className="w-16 h-1 bg-[#DDA23A] rounded-full mx-auto mb-10" />
+    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="/register"
+        className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#DDA23A] px-10 py-4 text-sm font-bold text-[#013463] shadow-lg shadow-[#DDA23A]/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-yellow-400 active:scale-95">
+        Become a Member
+        <span className="transition-transform duration-200 group-hover:translate-x-1"><IconArrow /></span>
+      </a>
+      <a href="https://t.me/nsda_community" target="_blank" rel="noreferrer"
+        className="inline-flex items-center justify-center rounded-full border-2 border-[#013463]/60 bg-transparent px-10 py-4 text-sm font-bold text-[#013463] transition-all duration-200 hover:border-[#013463] hover:bg-[#013463] hover:text-white active:scale-95">
+        Join Telegram Channel
+      </a>
+    </div>
+  </div>
+</section>
 
     </main>
   );

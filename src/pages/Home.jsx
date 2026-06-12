@@ -129,15 +129,6 @@ const IconZap = () => (
               A nationwide community of Muslim students and developers advancing in tech while staying true to Islamic values.
             </p>
 
-            {/* trust badges */}
-            <div className="flex flex-row items-center gap-3 overflow-x-auto py-1">
-              {["Faith-Driven", "Open-Source", "Student-Led"].map((badge) => (
-                <span key={badge} className="inline-flex items-center gap-1.5 bg-white/70 border border-gray-200 px-3 py-1.5 rounded-full text-xs font-semibold text-[#013463] whitespace-nowrap flex-shrink-0">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#DDA23A]" />
-                  {badge}
-                </span>
-              ))}
-            </div>
 
             {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-2">

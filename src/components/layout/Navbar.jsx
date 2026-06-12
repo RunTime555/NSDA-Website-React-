@@ -89,7 +89,8 @@ export default function Navbar() {
       transition: 'all 0.3s ease',
       width: '100%'
     }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
+      {/* Increased right padding here from 24px to 48px */}
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '30px 60px 25px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
         
         <div onClick={handleHomeClick} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '12px' }}>
           <img 

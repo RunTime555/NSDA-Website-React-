@@ -122,19 +122,8 @@ export default function WhatWeDo() {
               humanity, rooted in faith and code.
             </p>
 
-           <div className="flex flex-row flex-nowrap overflow-x-auto gap-3 mb-10 py-1 items-center">
-              {["Faith-Driven", "Open-Source", "Student-Led", "Multi-University"].map((badge) => (
-              <span
-               key={badge}
-               className="inline-flex items-center gap-1.5 bg-white/70 border border-gray-200 px-3 py-1.5 rounded-full text-xs font-semibold text-[#013463] whitespace-nowrap flex-shrink-0"
-             >
-      <span className="w-1.5 h-1.5 rounded-full bg-[#DDA23A]" />
-      {badge}
-    </span>
-  ))}
-</div>
           
-            
+  
 
             <div className="flex flex-col sm:flex-row gap-4">
               <a

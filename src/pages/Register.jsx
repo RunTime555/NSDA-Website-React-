@@ -4,7 +4,7 @@ import Form from '../components/common/Form';
 function Register() {
   return (
     <main>
-      <div style={{ paddingTop: '80px', backgroundColor: 'var(--cloud-break)', minHeight: '100vh' }}>
+      <div style={{ paddingTop: '5px', backgroundColor: 'var(--cloud-break)', minHeight: '100vh' }}>
         <Form />
       </div>
     </main>

@@ -7,13 +7,13 @@ import star from "../assets/star.jpg";
 const episodes = [
   {
     id: 9,
-    title: "Nujum-Code Ep09 (Season Three ) - With Abdulfetah Jemal(AJ)",
-    category: "Podcast",
+    title: "Nujum-Code Ep09 (Season three) - With Abdulfetah Jemal(AJ)",
+    category: "Development",
     author: "Abdulfetah Jemal(AJ)",
-    duration: "02:09:21",
+    duration: "—",
     date: "2026-06-05",
     videoUrl: "https://youtu.be/E_SsxigkzoU",
-    description: " Senior Full Stack & Product Engineer - 'Your setbacks do not define your future , rebuilding yourself with discipline and belief does.'",
+    description: "Senior Full Stack & Product Engineer — 'Your setbacks do not define your future , rebuilding yourself with discipline and belief does.'",
   },
   {
     id: 8,
@@ -203,8 +203,9 @@ export default function Nujum() {
         <div className="absolute -right-16 -top-16 w-[320px] h-[320px] rounded-full border-2 border-[#DDA23A]/40 z-0 hidden lg:block" />
 
         <div ref={heroRef}
-          className="opacity-0 translate-y-10 transition-all duration-700 ease-out relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 py-28 lg:py-0">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-screen lg:min-h-0 lg:py-24">
+          className="opacity-0 translate-y-10 transition-all duration-700 ease-out relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32"
+          style={{ paddingTop: '6rem', paddingBottom: '5rem' }}>
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center lg:py-16">
 
             {/* ── Left ── */}
             <div className="space-y-7">
@@ -231,7 +232,7 @@ export default function Nujum() {
               {/* stats */}
               <div className="flex flex-wrap gap-8">
                 {[
-                  { value: "9+", label: "Episodes" },
+                  { value: `${episodes.length}`, label: "Episodes" },
                   { value: "3",                  label: "Seasons" },
                   { value: "Free",               label: "Always" },
                 ].map(({ value, label }) => (
@@ -242,13 +243,10 @@ export default function Nujum() {
                 ))}
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                
-               
-              </div>
+              
             </div>
 
-            {/* ── Right  featured video ── */}
+            {/* ── Right — taller featured video ── */}
             <div className="relative">
               <div
                 onClick={() => setSelected(latestEpisode)}
@@ -262,11 +260,11 @@ export default function Nujum() {
                         e.target.src = `https://img.youtube.com/vi/${featuredVideoId}/hqdefault.jpg`;
                     }}
                     /* taller: aspect-[20/15] instead of aspect-video (16/9) */
-                    className="w-full aspect-[20/15] object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full aspect-[19/14] object-cover transition-transform duration-700 group-hover:scale-105"
                     alt={latestEpisode.title}
                   />
                 ) : (
-                  <div className="w-full aspect-[20/15] bg-[#013463]/10 flex items-center justify-center">
+                  <div className="w-full aspect-[18/14] bg-[#013463]/10 flex items-center justify-center">
                     <span className="text-gray-400 text-sm">Thumbnail loading…</span>
                   </div>
                 )}
@@ -349,7 +347,32 @@ export default function Nujum() {
 
           
 
-        
+            {/* slider controls (only when not showAll) */}
+            {!showAll && filtered.length > CARDS_PER_PAGE && (
+              <div className="flex items-center justify-between mb-6">
+                <span className="text-xs text-gray-400 font-medium">
+                  Showing {sliderStart + 1}–{Math.min(sliderStart + CARDS_PER_PAGE, filtered.length)} of {filtered.length}
+                </span>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setSliderStart(s => Math.max(0, s - 1))}
+                    disabled={!canPrev}
+                    className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-200
+                      ${canPrev ? "border-[#013463] text-[#013463] hover:bg-[#013463] hover:text-white" : "border-gray-200 text-gray-300 cursor-not-allowed"}`}
+                  >
+                    <IconChevronLeft />
+                  </button>
+                  <button
+                    onClick={() => setSliderStart(s => Math.min(filtered.length - CARDS_PER_PAGE, s + 1))}
+                    disabled={!canNext}
+                    className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-200
+                      ${canNext ? "border-[#013463] text-[#013463] hover:bg-[#013463] hover:text-white" : "border-gray-200 text-gray-300 cursor-not-allowed"}`}
+                  >
+                    <IconChevronRight />
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -512,7 +535,7 @@ export default function Nujum() {
           </p>
           <div className="w-16 h-1 bg-[#DDA23A] rounded-full mx-auto mb-10" />
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/register"
+            <a href="/form"
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#DDA23A] px-10 py-4 text-sm font-bold text-[#013463] shadow-lg shadow-[#DDA23A]/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-yellow-400 active:scale-95">
               Become a Member
               <span className="transition-transform duration-200 group-hover:translate-x-1"><IconArrow /></span>
@@ -526,14 +549,16 @@ export default function Nujum() {
       </section>
 
 
-      {/* ══════════════════════════════════════════
-          VIDEO MODAL
+     {/* ══════════════════════════════════════════
+          VIDEO MODAL — Optimized for long titles & mobile layout
       ══════════════════════════════════════════ */}
       {selected && (
-        <div className="fixed inset-0 bg-[#013463]/95 z-[100] flex items-center justify-center p-4 sm:p-6 backdrop-blur-md"
+        <div className="fixed inset-0 bg-[#013463]/95 z-[9999] flex items-center justify-center p-4 sm:p-6 backdrop-blur-md"
           onClick={() => setSelected(null)}>
           <div className="bg-white rounded-[2rem] sm:rounded-[3rem] max-w-4xl w-full overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}>
+            
+            {/* Video Container */}
             <div className="aspect-video bg-black">
               {getVideoId(selected.videoUrl) ? (
                 <iframe width="100%" height="100%"
@@ -545,21 +570,36 @@ export default function Nujum() {
                 <div className="w-full h-full flex items-center justify-center text-white text-sm">Video unavailable</div>
               )}
             </div>
-            <div className="p-6 sm:p-8 flex items-start justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#DDA23A]">EP {String(selected.id).padStart(2,"0")}</span>
+
+            {/* Details Footer Section */}
+            <div className="p-5 sm:p-8 flex items-start justify-between gap-4">
+              {/* flex-1 and min-w-0 stops the text from squishing the close button */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center flex-wrap gap-2 mb-1.5">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#DDA23A]">
+                    EP {String(selected.id).padStart(2,"0")}
+                  </span>
                   <span className="text-gray-300">·</span>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{selected.category}</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                    {selected.category}
+                  </span>
                 </div>
-                <h2 className="text-xl sm:text-2xl font-extrabold text-[#013463] leading-tight">{selected.title}</h2>
-                <p className="text-sm text-gray-400 mt-1">{selected.author}{selected.duration !== "—" ? ` · ${selected.duration}` : ""}</p>
+                {/* break-words handles long titles gracefully on tiny screens */}
+                <h2 className="text-base sm:text-2xl font-extrabold text-[#013463] leading-tight break-words">
+                  {selected.title}
+                </h2>
+                <p className="text-xs sm:text-sm text-gray-500 mt-1.5 font-medium truncate">
+                  {selected.author}{selected.duration !== "—" ? ` · ${selected.duration}` : ""}
+                </p>
               </div>
+
+              {/* Close Button — self-start keeps it aligned to the top right regardless of title height */}
               <button onClick={() => setSelected(null)}
-                className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-[#013463] hover:text-white transition-colors duration-200">
+                className="flex-shrink-0 self-start w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 rounded-full flex items-center justify-center text-[#013463] hover:bg-[#013463] hover:text-white transition-colors duration-200">
                 <IconClose />
               </button>
             </div>
+
           </div>
         </div>
       )}

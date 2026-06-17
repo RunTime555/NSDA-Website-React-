@@ -109,7 +109,7 @@ export default function Leadership() {
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <img src={star} alt="" aria-hidden="true"
           style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center', zIndex:0 }} />
-        <div className="absolute inset-0 bg-white/25" style={{ zIndex:1 }} />
+        <div className="absolute inset-0 bg-white/5" style={{ zIndex:1 }} />
         <div className="absolute -right-32 -top-32 w-[500px] h-[500px] rounded-full border-2 border-[#013463]/40 hidden lg:block" style={{ zIndex:2 }} />
         <div className="absolute -right-16 -top-16 w-[320px] h-[320px] rounded-full border-2 border-[#DDA23A]/40 hidden lg:block" style={{ zIndex:2 }} />
 
@@ -308,7 +308,7 @@ export default function Leadership() {
     </p>
     <div className="w-16 h-1 bg-[#DDA23A] rounded-full mx-auto mb-10" />
     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-      <a href="/register"
+      <a href="/form"
         className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#DDA23A] px-10 py-4 text-sm font-bold text-[#013463] shadow-lg shadow-[#DDA23A]/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-yellow-400 active:scale-95">
         Become a Member
         <span className="transition-transform duration-200 group-hover:translate-x-1"><IconArrow /></span>

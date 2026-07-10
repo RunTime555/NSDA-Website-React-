@@ -125,7 +125,7 @@ export default function WhatWeDo() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <a
-                href="/register"
+                href="/form"
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#DDA23A] px-8 py-4 text-sm font-bold text-[#013463] shadow-lg shadow-[#DDA23A]/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-yellow-400 active:scale-95"
               >
                 Become a Member

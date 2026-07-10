@@ -20,7 +20,7 @@ NSDA empowers Muslim students across Ethiopia to grow technically while staying 
 ## Tech Stack
 
 - **React 18 + Vite** — frontend framework
-- **Tailwind CSS** — styling (no plain CSS)
+- **Tailwind CSS** — styling 
 - **React Router v6** — routing
 - **Font Awesome 6** — icons (CDN)
 
@@ -41,7 +41,7 @@ npm run build      # production build → dist/
 | `/` | Home |
 | `/about` | About |
 | `/what-we-do` | What We Do |
-| `/projects` | Projects (9 open-source) |
+| `/projects` | Projects  |
 | `/nujum` | Nujum al-Code Podcast |
 | `/leadership` | Leadership Team |
 
@@ -60,9 +60,6 @@ git checkout -b feat/your-feature
 # make changes → commit → open PR
 ```
 
-- Tailwind only — no plain CSS classes
-- Data in `src/data/` — not hardcoded in components
-- Never mix data exports with components in `.jsx` files (breaks Vite HMR)
 
 ---
 

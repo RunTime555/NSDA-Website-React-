@@ -11,7 +11,6 @@ import {
 import man from "../assets/man.jpg";
 import star from "../assets/star.jpg";
 
-/* ─── tiny fade-in hook (IntersectionObserver, no extra lib) ─── */
 function useFadeIn() {
   const ref = useRef(null);
   useEffect(() => {

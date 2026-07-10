@@ -29,9 +29,17 @@ function ScrollToHash() {
   return null;
 }
 
-export default function App() {
+// ─── ፉተሩን በገጽ ዓይነት የሚቆጣጠር አዲስ Component ───
+function AppContent() {
+  const location = useLocation();
+
+  
+  const hideFooterRoutes = ["/form", "/register"]; 
+
+  const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
+
   return (
-    <BrowserRouter>
+    <>
       <ScrollToHash />
       <Navbar />
       <Routes>
@@ -44,7 +52,16 @@ export default function App() {
         <Route path="/leadership" element={<Leadership />} />
         <Route path="/form" element={<Form />} />
       </Routes>
-      <Footer />
+      
+      {!shouldHideFooter && <Footer />}
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }

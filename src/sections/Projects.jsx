@@ -254,7 +254,7 @@ export default function Projects() {
             </p>
             <div className="flex flex-wrap gap-8 sm:gap-12">
               {[
-                { value: "9+",    label: "Active Projects" },
+                { value: "9+",   label: "Active Projects" },
                 { value: "50+",  label: "Contributors" },
                 { value: "100%", label: "Open Source" },
               ].map(({ value, label }) => (
@@ -296,9 +296,7 @@ export default function Projects() {
             </p>
           </div>
 
-          <div ref={gridRef}
-            className="opacity-0 translate-y-10 transition-all duration-700 ease-out grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
+          <div ref={gridRef} className="opacity-0 translate-y-10 transition-all duration-700 ease-out grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {PROJECTS.map((p) => (
               <a
                 key={p.id}
@@ -322,7 +320,6 @@ export default function Projects() {
                 )}
 
                 <div className="relative z-10 p-6 sm:p-7 flex flex-col gap-4 flex-1">
-
                   {/* header row */}
                   <div className="flex items-start justify-between gap-3">
                     <div className="space-y-2">
@@ -339,7 +336,7 @@ export default function Projects() {
                         {p.title}
                       </h3>
                     </div>
-                    <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110 ${p.dark ? 'bg-[#DDA23A] text-[#013463]' : 'bg-[#DDA23A] text-[#013463]'}`}>
+                    <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110 bg-[#DDA23A] text-[#013463]`}>
                       {p.icon}
                     </div>
                   </div>
@@ -361,32 +358,28 @@ export default function Projects() {
                     ))}
                   </ul>
 
-                  {/* footer: contributors + link */}
-                  <div className={`mt-auto pt-4 border-t flex items-center justify-between ${p.dark ? 'border-white/10' : 'border-gray-100'}`}>
-                    <span className={`text-[10px] font-medium ${p.dark ? 'text-white/40' : 'text-gray-300'}`}>
+                  {/* FIXED FOOTER */}
+                  <div className={`mt-auto pt-4 border-t flex flex-wrap items-center justify-between gap-2 min-w-0 ${p.dark ? 'border-white/10' : 'border-gray-100'}`}>
+                    <span className={`text-[10px] font-medium truncate flex-1 min-w-[100px] ${p.dark ? 'text-white/40' : 'text-gray-400'}`}>
                       {p.contributors} contributors
                     </span>
-                    <span className={`inline-flex items-center gap-1.5 text-xs font-bold transition-colors duration-200 ${p.dark ? 'text-[#DDA23A] group-hover:gap-2.5' : 'text-[#013463] group-hover:text-[#DDA23A] group-hover:gap-2.5'}`}>
+                    <span className={`inline-flex items-center gap-1.5 text-xs font-bold transition-all duration-200 flex-shrink-0 ${p.dark ? 'text-[#DDA23A] group-hover:gap-2.5' : 'text-[#013463] group-hover:text-[#DDA23A] group-hover:gap-2.5'}`}>
                       {p.linkLabel}
                       <IconExternal />
                     </span>
                   </div>
-
                 </div>
               </a>
             ))}
-
           </div>
+
         </div>
       </section>
-
 
       {/* ══ "WHAT WE DO" / CONTRIBUTOR CTA ══ */}
       <section className="bg-[#013463] py-20 sm:py-28 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
         <div className="max-w-7xl mx-auto">
-          <div ref={ctaRef}
-            className="opacity-0 translate-y-10 transition-all duration-700 ease-out grid md:grid-cols-2 gap-12 items-center">
-
+          <div ref={ctaRef} className="opacity-0 translate-y-10 transition-all duration-700 ease-out grid md:grid-cols-2 gap-12 items-center">
             <div>
               <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-5">
                 <span className="inline-block w-6 h-px bg-[#DDA23A]" />
@@ -434,7 +427,6 @@ export default function Projects() {
                 <p className="pt-4 text-white/40 italic">// Build for the Dunya, secure the Akhira.</p>
               </div>
             </div>
-
           </div>
         </div>
       </section>
@@ -458,8 +450,6 @@ export default function Projects() {
           </p>
           <div className="w-16 h-1 bg-[#DDA23A] rounded-full mx-auto mb-10" />
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            
-            
             <Link 
               to="/form"
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#DDA23A] px-10 py-4 text-sm font-bold text-[#013463] shadow-lg shadow-[#DDA23A]/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-yellow-400 active:scale-95"

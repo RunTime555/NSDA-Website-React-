@@ -550,61 +550,74 @@ export default function Nujum() {
         </div>
       </section>
 
-
-     {/* ══════════════════════════════════════════
-          VIDEO MODAL — Optimized for long titles & mobile layout
-      ══════════════════════════════════════════ */}
-      {selected && (
-        <div className="fixed inset-0 bg-[#013463]/95 z-[9999] flex items-center justify-center p-4 sm:p-6 backdrop-blur-md"
-          onClick={() => setSelected(null)}>
-          <div className="bg-white rounded-[2rem] sm:rounded-[3rem] max-w-4xl w-full overflow-hidden shadow-2xl"
-            onClick={(e) => e.stopPropagation()}>
-            
-            {/* Video Container */}
-            <div className="aspect-video bg-black">
-              {getVideoId(selected.videoUrl) ? (
-                <iframe width="100%" height="100%"
-                  src={`https://www.youtube.com/embed/${getVideoId(selected.videoUrl)}?autoplay=1&rel=0`}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen title={selected.title} />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-white text-sm">Video unavailable</div>
-              )}
-            </div>
-
-            {/* Details Footer Section */}
-            <div className="p-5 sm:p-8 flex items-start justify-between gap-4">
-              {/* flex-1 and min-w-0 stops the text from squishing the close button */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center flex-wrap gap-2 mb-1.5">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#DDA23A]">
-                    EP {String(selected.id).padStart(2,"0")}
-                  </span>
-                  <span className="text-gray-300">·</span>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                    {selected.category}
-                  </span>
-                </div>
-                {/* break-words handles long titles gracefully on tiny screens */}
-                <h2 className="text-base sm:text-2xl font-extrabold text-[#013463] leading-tight break-words">
-                  {selected.title}
-                </h2>
-                <p className="text-xs sm:text-sm text-gray-500 mt-1.5 font-medium truncate">
-                  {selected.author}{selected.duration !== "—" ? ` · ${selected.duration}` : ""}
-                </p>
-              </div>
-
-              {/* Close Button — self-start keeps it aligned to the top right regardless of title height */}
-              <button onClick={() => setSelected(null)}
-                className="flex-shrink-0 self-start w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 rounded-full flex items-center justify-center text-[#013463] hover:bg-[#013463] hover:text-white transition-colors duration-200">
-                <IconClose />
-              </button>
-            </div>
-
+       {/* ══════════════════════════════════════════
+      VIDEO MODAL — Optimized for Tablets & Landscape
+   ══════════════════════════════════════════ */}
+{selected && (
+  <div 
+    className="fixed inset-0 bg-[#013463]/95 z-[9999] flex items-center justify-center p-3 sm:p-6 backdrop-blur-md"
+    onClick={() => setSelected(null)}
+  >
+    <div 
+      className="bg-white rounded-2xl sm:rounded-[2.5rem] max-w-4xl w-full max-h-[90vh] md:max-h-[85vh] overflow-hidden shadow-2xl flex flex-col"
+      onClick={(e) => e.stopPropagation()}
+    >
+      
+      {/* Video Container — Keeps 16:9 Aspect Ratio perfectly without stretching */}
+      <div className="w-full aspect-video bg-black flex-shrink-0">
+        {getVideoId(selected.videoUrl) ? (
+          <iframe 
+            width="100%" 
+            height="100%"
+            src={`https://www.youtube.com/embed/${getVideoId(selected.videoUrl)}?autoplay=1&rel=0`}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen 
+            title={selected.title} 
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-white text-sm">
+            Video unavailable
           </div>
+        )}
+      </div>
+
+      {/* Details Footer Section — Safe Scrollable area for Tablets/Mobile */}
+      <div className="p-4 sm:p-6 md:p-8 flex items-start justify-between gap-4 overflow-y-auto min-h-0 bg-white">
+        {/* flex-1 and min-w-0 stops the text from squishing the close button */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center flex-wrap gap-1.5 sm:gap-2 mb-1 sm:mb-2">
+            <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-[#DDA23A]">
+              EP {String(selected.id).padStart(2, "0")}
+            </span>
+            <span className="text-gray-300 text-xs">·</span>
+            <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-400">
+              {selected.category}
+            </span>
+          </div>
+          
+          {/* break-words handles long titles gracefully */}
+          <h2 className="text-sm sm:text-xl md:text-2xl font-extrabold text-[#013463] leading-snug sm:leading-tight break-words">
+            {selected.title}
+          </h2>
+          
+          <p className="text-[11px] sm:text-sm text-gray-500 mt-1 sm:mt-2 font-medium truncate">
+            {selected.author}{selected.duration !== "—" ? ` · ${selected.duration}` : ""}
+          </p>
         </div>
-      )}
+
+        {/* Close Button — Stays responsive and perfectly positioned */}
+        <button 
+          onClick={() => setSelected(null)}
+          className="flex-shrink-0 self-start w-9 h-9 sm:w-12 sm:h-12 bg-gray-100 rounded-full flex items-center justify-center text-[#013463] hover:bg-[#013463] hover:text-white transition-colors duration-200"
+        >
+          <IconClose className="w-4 h-4 sm:w-5 sm:h-5" />
+        </button>
+      </div>
+
+    </div>
+  </div>
+)}
 
     </main>
   );

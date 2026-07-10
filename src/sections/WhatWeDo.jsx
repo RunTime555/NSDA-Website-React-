@@ -1,8 +1,9 @@
 ﻿import React, { useEffect, useRef } from "react";
-import star from "../assets/star.jpg";
+import { Link } from "react-router-dom"; 
+import star from "../assets/star.jpg"; 
 
 /* ─── images ─── */
-const IMG_CODE   = "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&auto=format&fit=crop";
+const IMG_CODE = "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&auto=format&fit=crop";
 
 /* ─── scroll-reveal hook ─── */
 function useFadeIn(delay = 0) {
@@ -43,11 +44,6 @@ const IconStar = () => (
     <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
   </svg>
 );
-const IconGlobe = () => (
-  <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-);
 const IconTrophy = () => (
   <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" d="M8 21h8m-4-4v4M7 3H5a2 2 0 00-2 2v3c0 2.97 1.69 5.537 4.138 6.76M17 3h2a2 2 0 012 2v3c0 2.97-1.69 5.537-4.138 6.76M7 3a9 9 0 0010 0M7 3C7 3 12 5 12 9s5-6 5-6" />
@@ -74,34 +70,25 @@ export default function WhatWeDo() {
   return (
     <main className="bg-[#f6f9fd] text-[#013463] overflow-x-hidden">
 
-      {/* ══════════════════════════════════════════
-          1. HERO — star bg, like About page
-      ══════════════════════════════════════════ */}
+      {/* 1. HERO — Star Background */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
-
-        {/* star background image */}
         <img
-          src={star}
+          src={star || "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=1200"} 
           alt=""
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover select-none z-0"
         />
 
-        {/* light overlay — keeps image vivid */}
         <div className="absolute inset-0 z-0 bg-white/25" />
 
-        {/* decorative rings */}
         <div className="absolute -right-32 -top-32 w-[500px] h-[500px] rounded-full border-2 border-[#013463]/40 z-0 hidden lg:block" />
         <div className="absolute -right-16 -top-16 w-[320px] h-[320px] rounded-full border-2 border-[#DDA23A]/40 z-0 hidden lg:block" />
 
-        {/* content */}
         <div
           ref={heroRef}
           className="opacity-0 translate-y-10 transition-all duration-700 ease-out relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 pt-24 pb-16 md:pt-32 md:pb-24"
         >
           <div className="max-w-3xl">
-
-            {/* eyebrow */}
             <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-6">
               <span className="inline-block w-6 h-px bg-[#DDA23A]" />
               Our Mission
@@ -122,15 +109,16 @@ export default function WhatWeDo() {
               humanity, rooted in faith and code.
             </p>
 
-
             <div className="flex flex-col sm:flex-row gap-4">
-              <a
-                href="/form"
+            
+              <Link
+                to="/form" 
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#DDA23A] px-8 py-4 text-sm font-bold text-[#013463] shadow-lg shadow-[#DDA23A]/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-yellow-400 active:scale-95"
               >
                 Become a Member
                 <span className="transition-transform duration-200 group-hover:translate-x-1"><IconArrow /></span>
-              </a>
+              </Link>
+          
               <a
                 href="https://t.me/nsda_community"
                 target="_blank"
@@ -143,26 +131,18 @@ export default function WhatWeDo() {
           </div>
         </div>
 
-        {/* bottom fade into next section */}
         <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#f6f9fd] to-transparent z-10 pointer-events-none" />
 
-        {/* scroll hint */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1 animate-bounce">
           <span className="w-px h-8 bg-[#013463]/30" />
           <span className="w-1.5 h-1.5 rounded-full bg-[#013463]/50" />
         </div>
       </section>
 
-
-      {/* ══════════════════════════════════════════
-          2. STATS
-      ══════════════════════════════════════════ */}
+      {/* 2. STATS */}
       <section className="bg-[#013463] py-20 sm:py-28 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
         <div className="max-w-7xl mx-auto">
-          <div
-            ref={statsRef}
-            className="opacity-0 translate-y-10 transition-all duration-700 ease-out"
-          >
+          <div ref={statsRef} className="opacity-0 translate-y-10 transition-all duration-700 ease-out">
             <div className="text-center mb-14">
               <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-4">
                 <span className="inline-block w-6 h-px bg-[#DDA23A]" />
@@ -178,7 +158,7 @@ export default function WhatWeDo() {
               {[
                 { value: "11+",  color: "text-white",     label: "Industry Mentors",     sub: "Guiding the next generation" },
                 { value: "80+",  color: "text-[#DDA23A]", label: "Active Students",      sub: "From universities nationwide" },
-                { value: "15+", color: "text-white",     label: "Universities",           sub: "Serving the Ummah globally" },
+                { value: "15+",  color: "text-white",     label: "Universities",           sub: "Serving the Ummah globally" },
               ].map(({ value, color, label, sub }) => (
                 <div
                   key={label}
@@ -195,17 +175,10 @@ export default function WhatWeDo() {
         </div>
       </section>
 
-
-      {/* ══════════════════════════════════════════
-          3. PILLARS — bento grid
-      ══════════════════════════════════════════ */}
+      {/* 3. PILLARS — Bento Grid */}
       <section className="bg-[#f6f9fd] py-20 sm:py-28 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
         <div className="max-w-7xl mx-auto">
-          <div
-            ref={pillarsRef}
-            className="opacity-0 translate-y-10 transition-all duration-700 ease-out"
-          >
-            {/* section header */}
+          <div ref={pillarsRef} className="opacity-0 translate-y-10 transition-all duration-700 ease-out">
             <div className="mb-14">
               <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-3">
                 <span className="inline-block w-6 h-px bg-[#DDA23A]" />
@@ -221,10 +194,8 @@ export default function WhatWeDo() {
               </h2>
             </div>
 
-            {/* bento grid */}
             <div className="grid gap-6 md:grid-cols-12">
-
-              {/* Sadaqah Jariyah — wide with code image */}
+              {/* Sadaqah Jariyah */}
               <div className="md:col-span-8 bg-white border border-gray-100 p-8 sm:p-10 rounded-[1.75rem] shadow-sm hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 group overflow-hidden relative">
                 <span className="absolute top-0 left-10 h-[3px] w-12 bg-[#DDA23A] rounded-b-full" />
                 <div className="flex flex-col lg:flex-row gap-8">
@@ -259,7 +230,7 @@ export default function WhatWeDo() {
                 </div>
               </div>
 
-              {/* Mentorship — dark navy */}
+              {/* Mentorship */}
               <div className="md:col-span-4 bg-[#013463] text-white p-8 sm:p-10 rounded-[1.75rem] shadow-xl flex flex-col justify-between hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 group relative overflow-hidden">
                 <div className="absolute -bottom-12 -right-12 w-40 h-40 rounded-full bg-white/5 group-hover:scale-125 transition-transform duration-500" />
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#DDA23A] to-transparent" />
@@ -273,10 +244,9 @@ export default function WhatWeDo() {
                     Bridge the gap between academia and the elite tech industry.
                   </p>
                 </div>
-                
               </div>
 
-              {/* Nujum al-Code — eye-catch blue bg */}
+              {/* Nujum al-Code */}
               <div className="md:col-span-4 bg-[#0e4d8a] p-8 sm:p-10 rounded-[1.75rem] shadow-xl hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 group relative overflow-hidden">
                 <div className="absolute -top-10 -right-10 w-36 h-36 rounded-full bg-white/5 group-hover:scale-125 transition-transform duration-500" />
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#DDA23A] to-transparent" />
@@ -292,10 +262,9 @@ export default function WhatWeDo() {
                 </div>
               </div>
 
-              {/* NSDA Hackathon — wide */}
+              {/* NSDA Hackathon */}
               <div className="md:col-span-8 bg-white p-8 sm:p-10 rounded-[1.75rem] border border-gray-100 shadow-sm hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 relative overflow-hidden group">
                 <span className="absolute top-0 left-10 h-[3px] w-12 bg-[#DDA23A] rounded-b-full" />
-                {/* decorative bg pattern */}
                 <div className="absolute -right-10 -bottom-10 w-48 h-48 rounded-full bg-[#DDA23A]/5 group-hover:scale-125 transition-transform duration-500" />
 
                 <div className="relative z-10 space-y-5">
@@ -303,19 +272,16 @@ export default function WhatWeDo() {
                     <div className="w-12 h-12 rounded-2xl bg-[#DDA23A] flex items-center justify-center text-[#013463]">
                       <IconTrophy />
                     </div>
-                   
                   </div>
 
                   <div>
                     <h3 className="text-2xl sm:text-3xl font-extrabold text-[#013463] mb-2">NSDA Hackathon</h3>
                     <p className="text-gray-500 leading-relaxed text-sm sm:text-base max-w-xl">
                       An intensive internal hackathon exclusively for NSDA students — compete, collaborate,
-                      and ship real projects in 1 week. Teams solve challenges rooted in faith and
-                      community impact, mentored by NSDA leadership throughout.
+                      and ship real projects in 1 week.
                     </p>
                   </div>
 
-                  {/* highlights row */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
                     {[
                       { icon: "⏱️", label: "1 week" },
@@ -331,22 +297,15 @@ export default function WhatWeDo() {
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
       </section>
 
-
-      {/* ══════════════════════════════════════════
-          4. PROCESS TIMELINE
-      ══════════════════════════════════════════ */}
+      {/* 4. PROCESS TIMELINE */}
       <section className="bg-[#013463] py-20 sm:py-28 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
         <div className="max-w-7xl mx-auto">
-          <div
-            ref={processRef}
-            className="opacity-0 translate-y-10 transition-all duration-700 ease-out"
-          >
+          <div ref={processRef} className="opacity-0 translate-y-10 transition-all duration-700 ease-out">
             <div className="text-center mb-16">
               <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-3">
                 <span className="inline-block w-6 h-px bg-[#DDA23A]" />
@@ -354,9 +313,6 @@ export default function WhatWeDo() {
                 <span className="inline-block w-6 h-px bg-[#DDA23A]" />
               </span>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">Our Process</h2>
-              <p className="text-white/60 max-w-xl mx-auto text-sm sm:text-base">
-                From intentional planning to ethical execution — our workflow is designed for lasting impact.
-              </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 relative">
@@ -379,13 +335,9 @@ export default function WhatWeDo() {
         </div>
       </section>
 
-
-      {/* ══════════════════════════════════════════
-          5. CTA — consistent bg-[#f6f9fd], no inner card
-      ══════════════════════════════════════════ */}
+      {/* 5. CTA */}
       <section className="bg-[#f6f9fd] py-20 sm:py-28 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
         <div className="max-w-7xl mx-auto text-center">
-
           <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-5">
             <span className="inline-block w-5 h-px bg-[#DDA23A]" />
             Join the Movement
@@ -397,22 +349,17 @@ export default function WhatWeDo() {
             <span className="text-[#DDA23A]">higher purpose?</span>
           </h2>
 
-          <p className="text-gray-500 text-sm sm:text-base leading-relaxed max-w-xl mx-auto mb-10">
-            Join a community that puts faith at the center of every commit.
-            Build tools that matter, with people who care.
-          </p>
-
-          {/* divider */}
           <div className="w-16 h-1 bg-[#DDA23A] rounded-full mx-auto mb-10" />
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="/register"
+            
+            <Link
+              to="/form"
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#DDA23A] px-10 py-4 text-sm font-bold text-[#013463] shadow-lg shadow-[#DDA23A]/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-yellow-400 active:scale-95"
             >
               Become a Member
               <span className="transition-transform duration-200 group-hover:translate-x-1"><IconArrow /></span>
-            </a>
+            </Link>
             <a
               href="https://t.me/nsda_community"
               target="_blank"
@@ -422,7 +369,6 @@ export default function WhatWeDo() {
               Support Our Projects
             </a>
           </div>
-
         </div>
       </section>
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import star from '../assets/star.jpg';
 import { leadershipMembers } from '../data/leadership';
 
+
 /* data lives in src/data/leadership.js */
 function useFadeIn(delay = 0) {
   const ref = useRef(null);
@@ -308,11 +309,14 @@ export default function Leadership() {
     </p>
     <div className="w-16 h-1 bg-[#DDA23A] rounded-full mx-auto mb-10" />
     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-      <a href="/form"
+      <Link 
+        to="/form"
         className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#DDA23A] px-10 py-4 text-sm font-bold text-[#013463] shadow-lg shadow-[#DDA23A]/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-yellow-400 active:scale-95">
-        Become a Member
-        <span className="transition-transform duration-200 group-hover:translate-x-1"><IconArrow /></span>
-      </a>
+          Become a Member
+          <span className="transition-transform duration-200 group-hover:translate-x-1">
+          <IconArrow />
+          </span>
+          </Link>
       <a href="https://t.me/nsda_community" target="_blank" rel="noreferrer"
         className="inline-flex items-center justify-center rounded-full border-2 border-[#013463]/60 bg-transparent px-10 py-4 text-sm font-bold text-[#013463] transition-all duration-200 hover:border-[#013463] hover:bg-[#013463] hover:text-white active:scale-95">
         Join Telegram Channel

@@ -29,7 +29,7 @@ function ScrollToHash() {
   return null;
 }
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
       <ScrollToHash />
@@ -48,5 +48,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;

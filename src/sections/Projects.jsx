@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import star from "../assets/star.jpg";
 
 /* ─── scroll-reveal hook ─── */
@@ -291,7 +292,7 @@ export default function Projects() {
               </span>
             </h2>
             <p className="mt-3 text-gray-500 text-sm sm:text-base max-w-xl">
-              9 projects built by NSDA students for the Ummah — click any card to visit.
+              9+ projects built by NSDA students for the Ummah — click any card to visit.
             </p>
           </div>
 
@@ -380,7 +381,7 @@ export default function Projects() {
       </section>
 
 
-      {/* ══ CONTRIBUTOR CTA ══ */}
+      {/* ══ "WHAT WE DO" / CONTRIBUTOR CTA ══ */}
       <section className="bg-[#013463] py-20 sm:py-28 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
         <div className="max-w-7xl mx-auto">
           <div ref={ctaRef}
@@ -457,11 +458,16 @@ export default function Projects() {
           </p>
           <div className="w-16 h-1 bg-[#DDA23A] rounded-full mx-auto mb-10" />
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/register"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#DDA23A] px-10 py-4 text-sm font-bold text-[#013463] shadow-lg shadow-[#DDA23A]/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-yellow-400 active:scale-95">
+            
+            
+            <Link 
+              to="/form"
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#DDA23A] px-10 py-4 text-sm font-bold text-[#013463] shadow-lg shadow-[#DDA23A]/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-yellow-400 active:scale-95"
+            >
               Become a Member
               <span className="transition-transform duration-200 group-hover:translate-x-1"><IconArrow /></span>
-            </a>
+            </Link>
+
             <a href="https://t.me/nsda_community" target="_blank" rel="noreferrer"
               className="inline-flex items-center justify-center rounded-full border-2 border-[#013463] bg-transparent px-10 py-4 text-sm font-bold text-[#013463] transition-all duration-200 hover:bg-[#013463] hover:text-white active:scale-95">
               Join Telegram Channel

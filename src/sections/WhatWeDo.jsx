@@ -137,7 +137,7 @@ export default function WhatWeDo() {
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full border-2 border-[#013463] bg-white/60 px-8 py-4 text-sm font-bold text-[#013463] transition-all duration-200 hover:bg-[#013463] hover:text-white active:scale-95"
               >
-                Support Our Projects
+                Join Our Telegram
               </a>
             </div>
           </div>
@@ -176,9 +176,9 @@ export default function WhatWeDo() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-10">
               {[
-                { value: "11",  color: "text-white",     label: "Industry Mentors",     sub: "Guiding the next generation" },
-                { value: "80",  color: "text-[#DDA23A]", label: "Active Students",      sub: "From universities nationwide" },
-                { value: "15+", color: "text-white",     label: "Open Source Projects", sub: "Serving the Ummah globally" },
+                { value: "11+",  color: "text-white",     label: "Industry Mentors",     sub: "Guiding the next generation" },
+                { value: "80+",  color: "text-[#DDA23A]", label: "Active Students",      sub: "From universities nationwide" },
+                { value: "15+", color: "text-white",     label: "Universities",           sub: "Serving the Ummah globally" },
               ].map(({ value, color, label, sub }) => (
                 <div
                   key={label}

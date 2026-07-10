@@ -232,7 +232,7 @@ export default function Nujum() {
               {/* stats */}
               <div className="flex flex-wrap gap-8">
                 {[
-                  { value: `${episodes.length}`, label: "Episodes" },
+                  { value: "9+",                 label: "Episodes" },
                   { value: "3",                  label: "Seasons" },
                   { value: "Free",               label: "Always" },
                 ].map(({ value, label }) => (

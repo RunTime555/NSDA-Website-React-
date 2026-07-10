@@ -89,14 +89,14 @@ export default function About() {
         />
 
         
-        <div className="absolute inset-0 z-0 bg-white/25" />
+        <div className="absolute inset-0 z-0 bg-white/5" />
 
         {/* decorative ring */}
         <div className="absolute -right-32 -top-32 w-[500px] h-[500px] rounded-full border-2 border-[#013463]/40 z-0 hidden lg:block" />
         <div className="absolute -right-16 -top-16 w-[320px] h-[320px] rounded-full border-2 border-[#DDA23A]/40 z-0 hidden lg:block" />
 
         {/* content */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 pt-24 pb-16 md:pt-32 md:pb-24">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 py-28 md:py-0">
 
           <div className="max-w-3xl">
             {/* eyebrow */}
@@ -358,76 +358,81 @@ export default function About() {
       </section>
 
 
-      {/* ═══════════════════════════════════════════════
-          5. CTA
-      ═══════════════════════════════════════════════ */}
-      <section className="bg-white py-16 sm:py-24 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
-        <div
-          ref={ctaRef}
-          className="
-            opacity-0 translate-y-8 transition-all duration-700 ease-out
-            max-w-7xl mx-auto
-          "
-        >
-          {/* card */}
-          <div className="relative bg-[#013463] rounded-3xl overflow-hidden px-8 sm:px-12 md:px-16 py-14 sm:py-16 text-center">
+     {/* ═══════════════════════════════════════════════
+     5. CTA
+═══════════════════════════════════════════════ */}
+<section className="bg-white py-16 sm:py-24 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32">
+  <div
+    ref={ctaRef}
+    className="
+      opacity-0 translate-y-8 transition-all duration-700 ease-out
+      max-w-7xl mx-auto
+    "
+  >
+    {/* card */}
+    <div className="relative bg-[#013463] rounded-3xl overflow-hidden px-8 sm:px-12 md:px-16 py-14 sm:py-16 text-center">
 
-            {/* background geometric accents */}
-            <div className="absolute -top-20 -left-20 w-64 h-64 rounded-full bg-white/5 pointer-events-none" />
-            <div className="absolute -bottom-16 -right-16 w-80 h-80 rounded-full bg-white/5 pointer-events-none" />
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#DDA23A]/0 via-[#DDA23A] to-[#DDA23A]/0" />
+      {/* background geometric accents */}
+      <div className="absolute -top-20 -left-20 w-64 h-64 rounded-full bg-white/5 pointer-events-none" />
+      <div className="absolute -bottom-16 -right-16 w-80 h-80 rounded-full bg-white/5 pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#DDA23A]/0 via-[#DDA23A] to-[#DDA23A]/0" />
 
-            <div className="relative z-10 max-w-2xl mx-auto">
-              <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-4">
-                <span className="inline-block w-5 h-px bg-[#DDA23A]" />
-                Join Us
-                <span className="inline-block w-5 h-px bg-[#DDA23A]" />
-              </span>
+      <div className="relative z-10 max-w-2xl mx-auto">
+        <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#DDA23A] mb-4">
+          <span className="inline-block w-5 h-px bg-[#DDA23A]" />
+          Join Us
+          <span className="inline-block w-5 h-px bg-[#DDA23A]" />
+        </span>
 
-              <h2 className="text-white font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-5 leading-tight">
-                Ready to Build for<br />
-                <span className="text-[#DDA23A]">the Sanctuary?</span>
-              </h2>
+        <h2 className="text-white font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-5 leading-tight">
+          Ready to Build for<br />
+          <span className="text-[#DDA23A]">the Sanctuary?</span>
+        </h2>
 
-              <p className="text-gray-300 text-sm sm:text-base leading-relaxed max-w-lg mx-auto mb-8">
-                Join our community of student developers and start your journey
-                of technical and spiritual excellence.
-              </p>
+        <p className="text-gray-300 text-sm sm:text-base leading-relaxed max-w-lg mx-auto mb-8">
+          Join our community of student developers and start your journey
+          of technical and spiritual excellence.
+        </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button
-                  onClick={() => navigate("/form")}
-                  className="
-                    w-full sm:w-auto
-                    bg-[#DDA23A] text-[#013463]
-                    px-8 py-3.5 rounded-full
-                    font-bold text-sm tracking-wide
-                    hover:bg-yellow-400 active:scale-95
-                    transition-all duration-200 shadow-lg shadow-[#DDA23A]/30
-                  "
-                >
-                  Apply for Membership
-                </button>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button
+            onClick={() => {
+              navigate("/form");
+              window.scrollTo(0, 0);
+            }}
+            className="
+              w-full sm:w-auto
+              bg-[#DDA23A] text-[#013463]
+              px-8 py-3.5 rounded-full
+              font-bold text-sm tracking-wide
+              hover:bg-yellow-400 active:scale-95
+              transition-all duration-200 shadow-lg shadow-[#DDA23A]/30
+            "
+          >
+            Apply for Membership
+          </button>
 
-                <button
-                  onClick={() => navigate("/projects")}
-                  className="
-                    w-full sm:w-auto
-                    bg-transparent text-white border border-white/30
-                    px-8 py-3.5 rounded-full
-                    font-bold text-sm tracking-wide
-                    hover:bg-white/10 active:scale-95
-                    transition-all duration-200
-                  "
-                >
-                  View Projects →
-                </button>
-              </div>
-            </div>
-          </div>
+          <button
+            onClick={() => {
+              navigate("/projects");
+              window.scrollTo(0, 0);
+            }}
+            className="
+              w-full sm:w-auto
+              bg-transparent text-white border border-white/30
+              px-8 py-3.5 rounded-full
+              font-bold text-sm tracking-wide
+              hover:bg-white/10 active:scale-95
+              transition-all duration-200
+            "
+          >
+            View Projects →
+          </button>
         </div>
-      </section>
-
+      </div>
+    </div>
+  </div>
+</section>
     </div>
   );
 }

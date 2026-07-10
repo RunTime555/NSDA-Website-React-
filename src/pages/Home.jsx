@@ -231,7 +231,7 @@ function WhatWeDo() {
     { icon: <IconHeart />, title: "Sadaqah Jariyah", description: "Building open-source tools that serve the Ummah and earn continuous reward.", dark: false },
     { icon: <IconStar />,  title: "Nujum al-Code",   description: "Engaging technical deep-dives and webinars with industry veterans.",          dark: true  },
     { icon: <IconUsers />, title: "Mentorship",      description: "One-on-one guidance connecting seasoned devs with aspiring students.",         dark: false },
-    { icon: <IconCode />,  title: "NSDA Hackathon",  description: "An internal 48-hour hackathon exclusively for NSDA students.",                dark: true  },
+    { icon: <IconCode />,  title: "NSDA Hackathon",  description: "An internal 1 week hackathon exclusively for NSDA students.",                dark: true  },
   ];
   return (
     <section className="py-20 sm:py-28 bg-white relative" id="what-we-do">
@@ -320,9 +320,9 @@ function Mentorship() {
 function Projects() {
   const ref = useFadeIn(0);
   const projects = [
-    { tech: "Python / Telegram", title: "Nejm Ask Bot",           description: "A Telegram bot that bridges students and NSDA leadership — keeping all communication organised, fast, and within the community channel.", icon: <IconBot />,  dark: true  },
-    { tech: "React / Firebase",  title: "Quran Study App",        description: "A cross-platform app for structured Quran study and tafsir tracking with real-time sync across all devices.",                             icon: <IconBook />, dark: false },
-    { tech: "Python / Auto",     title: "Daily Quran Automation", description: "Automatically posts a short Quran video every morning to the Telegram channel — delivering Quranic verses to keep the community spiritually connected.", icon: <IconZap />,  dark: false },
+    { tech: "Python · Telegram", title: "Nejm Ask Bot",           description: "A Telegram bot that bridges students and NSDA leadership — keeping all communication organised, fast, and within the community channel.", icon: <IconBot />,  dark: true,  link: "https://t.me/NejmAskBot"             },
+    { tech: "Python · Auto",     title: "Daily Quran Automation", description: "Automatically posts a short Quran video every morning to the Telegram channel — delivering Quranic verses to keep the community spiritually connected.", icon: <IconZap />,  dark: false, link: "https://t.me/nsda_community/1126"    },
+    { tech: "Web App · Islamic", title: "Ihsan",                  description: "Islamic countdown app — track Ramadan, Eid, Hajj, prayer times, tasbih counter, Qur'an streak, Qibla finder and Zakat calculator.",                   icon: <IconBook />, dark: false, link: "https://ihsan-xi.vercel.app/"        },
   ];
   return (
     <section className="py-20 sm:py-28 bg-[#f6f9fd] relative" id="projects">
@@ -334,9 +334,10 @@ function Projects() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-[#013463]">Open Source Ecosystem</h2>
           <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">We build tools that solve problems within the community while following modern engineering best practices.</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
           {projects.map((p, i) => (
-            <div key={i} className={`group rounded-3xl overflow-hidden border shadow-sm hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 p-7 sm:p-8 relative
+            <a key={i} href={p.link} target="_blank" rel="noopener noreferrer"
+              className={`group rounded-3xl overflow-hidden border shadow-sm hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 p-7 sm:p-8 relative cursor-pointer
               ${p.dark ? 'bg-[#013463] border-[#013463]' : 'bg-white border-gray-100'}`}>
               <span className="absolute top-0 left-8 h-[3px] w-10 bg-[#DDA23A] rounded-b-full" />
               {p.dark && <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-white/5 group-hover:scale-125 transition-transform duration-500" />}
@@ -346,8 +347,21 @@ function Projects() {
               </div>
               <h3 className={`relative z-10 text-xl font-extrabold mb-3 ${p.dark ? 'text-white' : 'text-[#013463]'}`}>{p.title}</h3>
               <p className={`relative z-10 leading-relaxed text-sm ${p.dark ? 'text-white/70' : 'text-gray-500'}`}>{p.description}</p>
-            </div>
+            </a>
           ))}
+        </div>
+        {/* See All Projects */}
+        <div className="text-center">
+          <Link
+            to="/projects"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="group inline-flex items-center gap-2 rounded-full border-2 border-[#013463] bg-transparent px-8 py-3.5 text-sm font-bold text-[#013463] transition-all duration-200 hover:bg-[#013463] hover:text-white active:scale-95"
+          >
+            See All Projects
+            <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </Link>
         </div>
       </div>
     </section>
@@ -413,12 +427,12 @@ function Leadership() {
   const [showAll, setShowAll] = useState(false);
 
   const mainLeaders = [
-    { name: "Osama Seid",        role: "President",                  university: "Jimma University",       gender: "male",   icon: "fa-user-tie",  linkedin: "https://www.linkedin.com/in/osama-seid-a2978129a"        },
-    { name: "Nebiyou Elias",     role: "Vice President",             university: "AASTU",                  gender: "male",   icon: "fa-user",      linkedin: "https://www.linkedin.com/in/nebiyou-elias-mohammed/"     },
-    { name: "Abdelaziz Ebrahim", role: "Content Head",               university: "Bahir Dar University",   gender: "male",   icon: "fa-newspaper", linkedin: "https://www.linkedin.com/in/abdelazizEbrahim/"           },
-    { name: "Sumeya Muhammed",   role: "Sisters Communication Head", university: "Jimma University",       gender: "female", icon: "fa-comments",  linkedin: "http://linkedin.com/in/sumeya-muhammed-a83168319/"       },
-    { name: "Sumeya Awel",       role: "Sisters President",          university: "ASTU",                   gender: "female", icon: "fa-crown",     linkedin: "https://www.linkedin.com/in/sumeya-awel-320286306?"      },
-    { name: "Miftah Fentaw",     role: "Communication Head",         university: "Haramaya University",    gender: "male",   icon: "fa-bullhorn",  linkedin: "https://www.linkedin.com/in/miftah-fentaw/"              },
+    { name: "Osama Seid",           role: "President",                  university: "Jimma University",       gender: "male",   icon: "fa-user-tie",  linkedin: "https://www.linkedin.com/in/osama-seid-a2978129a"        },
+    { name: "Nebiyou Elias(Nebil)", role: "Vice President",             university: "AASTU",                  gender: "male",   icon: "fa-user",      linkedin: "https://www.linkedin.com/in/nebiyou-elias-mohammed/"     },
+    { name: "Abdelaziz Ebrahim",    role: "Content Head",               university: "Bahir Dar University",   gender: "male",   icon: "fa-newspaper", linkedin: "https://www.linkedin.com/in/abdelazizEbrahim/"           },
+    { name: "Sumeya Muhammed",      role: "Sisters Communication Head", university: "Jimma University",       gender: "female", icon: "fa-comments",  linkedin: "http://linkedin.com/in/sumeya-muhammed-a83168319/"       },
+    { name: "Sumeya Awel",          role: "Sisters President",          university: "ASTU",                   gender: "female", icon: "fa-crown",     linkedin: "https://www.linkedin.com/in/sumeya-awel-320286306?"      },
+    { name: "Miftah Fentaw",        role: "Communication Head",         university: "Haramaya University",    gender: "male",   icon: "fa-bullhorn",  linkedin: "https://www.linkedin.com/in/miftah-fentaw/"              },
   ];
 
   const moreLeaders = [
@@ -510,7 +524,7 @@ function CTA() {
           Ready to Build for the <span className="text-[#DDA23A]">Ummah?</span>
         </h2>
         <p className="text-gray-500 text-sm sm:text-base leading-relaxed max-w-xl mx-auto mb-10">
-          Join 80+ Muslim developers across the country. Be part of a community that grows together, codes together, and prays together.
+          Join our Muslim developers across the country. Be part of a community that grows together, codes together, and prays together.
         </p>
         <div className="w-16 h-1 bg-[#DDA23A] rounded-full mx-auto mb-10" />
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

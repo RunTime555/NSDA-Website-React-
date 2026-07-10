@@ -48,9 +48,9 @@ export default function Footer() {
   ];
 
   const socialLinks = [
-    { name: 'Telegram', href: 'https://t.me/nsda_community',         icon: <IconTelegram /> },
-    { name: 'LinkedIn', href: 'https://linkedin.com/company/nsda',   icon: <IconLinkedin /> },
-    { name: 'YouTube',  href: 'https://youtube.com/@NSDA_Community', icon: <IconYoutube />  },
+    { name: 'Telegram', href: 'https://t.me/nsda_community',                       icon: <IconTelegram /> },
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/company/nsda-community/',   icon: <IconLinkedin /> },
+    { name: 'YouTube',  href: 'https://youtube.com/@NSDA_Community',                 icon: <IconYoutube />  },
   ];
 
   return (
